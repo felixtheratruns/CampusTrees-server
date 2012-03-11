@@ -1,11 +1,12 @@
 <?php
 //Global configuration
-define(HOME, "http://trees.cecsresearch.org/");
-define(SQL_HOST, "localhost");
-define(SQL_USER, "user");
-define(SQL_PASS, "pass");
-define(SQL_DB, "database");
+define("HOME", "http://trees.cecsresearch.org/");
+define("SQL_HOST", "localhost");
+define("SQL_USER", "phpwebadmin");
+define("SQL_PASS", "treetrunk");
+define("SQL_DB", "uwrl");
 
 //GCTools configuration
-define(GCTOOLS_DIR, "/home/giga/workspace/GCTools/");
+define("GCTOOLS_DIR", "/var/www/GCTools/");
+echo "<h1>loaded config</h1>";
 ?>
