@@ -15,6 +15,9 @@ class ARHandler {
         //Contructor
         public function ARHandler(/*Will require info for response to Phone*/) {
             $this->dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            return True;
+        }
+        public function getZoneList() {
             try { //Try-Catch doesn't work probably because not using error handler
                 $res = $this->dbres->query("SELECT ZZoneId,
                     ZPointALat, ZPointALong,
@@ -26,31 +29,38 @@ class ARHandler {
             catch (Exception $e) {
                 echo $this->dbres->getLastError();
             }
+ 
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
-                $this->zoneList[$i][0] = intval($row['ZZoneId']);
-                $this->zoneList[$i][1] = $row['ZPointALat'];
-                $this->zoneList[$i][2] = $row['ZPointALong'];
-                $this->zoneList[$i][3] = $row['ZPointBLat'];
-                $this->zoneList[$i][4] = $row['ZPointBLong'];
-                $this->zoneList[$i][5] = $row['ZPointCLat'];
-                $this->zoneList[$i][6] = $row['ZPointCLong'];
-                $this->zoneList[$i][7] = $row['ZPointDLat'];
-                $this->zoneList[$i][8] = $row['ZPointDLong'];
+                $this->zoneList[$i] = array('id' => $row['ZZoneId'], 
+                  "{$row['ZZoneId']}" => array(
+                    'A' => array('lat' => $row['ZPointALat'], 'long' => $row['ZPointALong']), 
+                    'B' => array('lat' => $row['ZPointBLat'], 'long' => $row['ZPointBLong']), 
+                    'C' => array('lat' => $row['ZPointCLat'], 'long' => $row['ZPointCLong']), 
+                    'D' => array('lat' => $row['ZPointDLat'], 'long' => $row['ZPointDLong']) 
+                  )
+                );
                 $i++;
             }
-            //SendZoneListJSON();
-            return True;
-        }
-        public function PrintZoneList() {
+}
+        public function ZoneList_ToString() {
+            $this->getZoneList();
+            $res = "<br>";
             foreach ($this->zoneList as $row) {
-                echo "<br>";
-                foreach($row as $col) {
-                    echo "{$col}, ";
-                }
+                $i = $row['id'];
+                $res .= "Zone: {$i}<br>";
+                $res .= "&nbsp;&nbsp;Point A ({$row[$i]['A']['lat']}, {$row[$i]['A']['long']})<br>";
+                $res .= "&nbsp;&nbsp;Point B ({$row[$i]['B']['lat']}, {$row[$i]['B']['long']})<br>";
+                $res .= "&nbsp;&nbsp;Point C ({$row[$i]['C']['lat']}, {$row[$i]['C']['long']})<br>";
+                $res .= "&nbsp;&nbsp;Point D ({$row[$i]['D']['lat']}, {$row[$i]['D']['long']})<br>";
             }
+            return $res;
         }
 
+        public function JSON_RequestZoneList() {
+            $this->getZoneList();
+            return json_encode($this->zoneList);
+        }
         public function SelectZone($zId) {
             try {
                 $res = $this->dbres->query("SELECT TTreeId, TLat, TLong
@@ -67,27 +77,33 @@ class ARHandler {
             echo "<br><br>";
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
-                $this->selectedTrees[$i][0] = $row['TTreeId'];
-                $this->selectedTrees[$i][1] = $row['TLat'];
-                $this->selectedTrees[$i][2] = $row['TLong'];
-                $i++;
+                $this->selectedTrees[$i] = array(
+                  'id' => $row['TTreeId'],
+                  'lat' => $row['TLat'],
+                  'long' => $row['TLong']
+                );
+            $i++;
             }
         }
 
+        public function JSON_RequestTreesByZone($zone) {
+            $this->SelectZone($zone);
+            echo json_encode($this->selectedTrees);
+        }
 
-        public function PrintSelectedTrees() {
-            echo "<br><br>";
+        public function SelectedTrees_ToString() {
+            $res = "<br><br>";
             $i = 1;
             foreach ($this->selectedTrees as $row) {
-                echo "{$i}) ";
+                $res .= "{$i}) ";
                 foreach ($row as $col) {
-                    echo "{$col}  ";
+                    $res .= "{$col}  ";
                 }
-                echo "<br>";
+                $res .= "<br>";
                 $i++;
             }
+        return $res;
         }
-//        private function SendZoneListJSON()
             
 }
 ?>

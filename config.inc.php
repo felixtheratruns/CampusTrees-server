@@ -8,5 +8,4 @@ define("SQL_DB", "uwrl");
 
 //GCTools configuration
 define("GCTOOLS_DIR", "/var/www/GCTools/");
-echo "<h1>loaded config</h1>";
 ?>
