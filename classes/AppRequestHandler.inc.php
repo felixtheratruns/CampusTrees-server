@@ -1,6 +1,7 @@
 <?php
 //Import configuration
 require_once('/var/www/uofltrees-web/config.inc.php');
+require_once('/var/www/uofltrees-web/classes/TreeTable.inc.php');
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
 
@@ -10,11 +11,13 @@ class ARHandler {
 
         protected $zoneList;    //List of Zones in DB
         protected $selectedTrees;
+        protected $tTable;      //Tree Table Object
         
 
         //Contructor
         public function ARHandler(/*Will require info for response to Phone*/) {
             $this->dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $this->tTable = new TreeTable();
             return True;
         }
         public function getZoneList() {
@@ -62,19 +65,7 @@ class ARHandler {
             return json_encode($this->zoneList);
         }
         public function SelectZone($zId) {
-            try {
-                $res = $this->dbres->query("SELECT TTreeId, TLat, TLong
-                    FROM  Tree INNER JOIN 
-                          (
-                            ZoneAreaMapping INNER JOIN Area 
-                            ON (AAreaId = ZAPAreaId) 
-                          ) ON (TAreaId = AAreaId)
-                    WHERE ZAPZoneId = {$zId}");
-            }
-            catch (Exception $e) {
-            }
-                echo $this->dbres->getLastError();
-            echo "<br><br>";
+            $res = $this->tTable->ByZone($zId);
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
                 $this->selectedTrees[$i] = array(
