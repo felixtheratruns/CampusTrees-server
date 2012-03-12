@@ -22,7 +22,7 @@ class TreeTable {
                             ZoneAreaMapping INNER JOIN Area 
                             ON (AAreaId = ZAPAreaId) 
                           ) ON (TAreaId = AAreaId)
-                    WHERE ZAPZoneId = {$zone}");
+                    WHERE ZAPZoneId = {" . $this->dbres->escapeString($zone) . "}");
         }
 }
 ?>
