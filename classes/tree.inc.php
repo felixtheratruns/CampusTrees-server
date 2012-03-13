@@ -1,6 +1,4 @@
 <?php
-//Import configuration
-require_once('/var/www/uofltrees-web/config.inc.php');
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
 
