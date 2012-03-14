@@ -13,17 +13,20 @@ class ARHandler { /*Should probably create a generic
         protected $speciesList;    //List of Species in DB
         protected $selectedTrees;
         protected $tTable;      //Tree Table Object
-        protected $zpTable;
-        protected $sTable;
+        protected $zpTable;     //ZonePoint table object
+        protected $sTable;      //Species table object
         
 
         //Contructor
-        public function ARHandler(/*Will require info for response to Phone*/) {
+        public function ARHandler() {
             $this->tTable = new TreeTable();
             $this->zpTable = new ZonePointTable();
             $this->sTable = new SpeciesTable();
             return True;
         }
+
+
+//Species Table functions
         private function getSpeciesList() {
             $this->speciesList = $this->sTable->GetSpecies();
         }
@@ -32,9 +35,15 @@ class ARHandler { /*Should probably create a generic
             return json_encode($this->speciesList);
         }
 
+//Zone List Functions
         private function getZoneList() {
             $this->zoneList = $this->zpTable->GetZones();
         }
+        public function JSON_RequestZoneList() {
+            $this->getZoneList();
+            return json_encode($this->zoneList);
+        }
+
         public function ZoneList_ToString() {
             $this->getZoneList();
             $res = "<br>";
@@ -48,10 +57,7 @@ class ARHandler { /*Should probably create a generic
             return $res;
         }
 
-        public function JSON_RequestZoneList() {
-            $this->getZoneList();
-            return json_encode($this->zoneList);
-        }
+//Tree Table Functions
         public function SelectZone($zId) {
             $this->selectedTrees = $this->tTable->ByZone($zId);
         }

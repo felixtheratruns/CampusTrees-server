@@ -14,6 +14,9 @@ class SpeciesTable {
         }
 
         public function GetSpecies() {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns JSON optimized array of species info.
+            */
             $res = $this->QueryGetSpecies();
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
@@ -31,6 +34,8 @@ class SpeciesTable {
         }
 
         private function QueryGetSpecies() {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns mysql_dataset of species info*/
             return $this->dbres->query("SELECT SSpeciesId, SCommonName,
                           SNAmerica, SKy, SNonNative, SComments
                     FROM  Species

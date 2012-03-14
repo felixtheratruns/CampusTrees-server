@@ -14,6 +14,9 @@ class ZonePointTable {
         }
 
         public function GetZones() {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns JSON optimized array of zone info.
+            */
             $res = $this->QueryGetZones();
             $cur_zone = mysql_result($res, 0, 0);
             $pointList[0][0] = array('lat' => (float)mysql_result($res, 0, 2), 'long' => (float)mysql_result($res, 0, 3));
@@ -41,6 +44,8 @@ class ZonePointTable {
         }
 
         private function QueryGetZones() {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns mysql_dataset of zone info*/
             $res = $this->dbres->query("SELECT ZPZoneId,
                 ZPPointId, ZPLat, ZPLong
                 FROM ZonePoint

@@ -36,7 +36,7 @@ class Tree {
             THeight,TCrwnId, TCrwnWidth1, TCrwnWidth2, TCrwnArea, TRemoved,
             TComments, TRecCreatedDate, TRecCreatorId
             FROM Tree where TTreeId = " . \
-            strval($id) . ";"));
+            $this->dbres->escapeString(strval($id)) . ";"));
         //Now set all of the other attributes
         echo "<br>";
         echo $res['TTreeId'];

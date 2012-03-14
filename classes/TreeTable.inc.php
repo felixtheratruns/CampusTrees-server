@@ -14,8 +14,11 @@ class TreeTable {
         }
 
         public function ByZone($zId) {
+            /*Precondition: $zId is a valid zone Id integer, Database connected and populated
+             *Postcondition: Returns JSON optimized array of Tree info of trees in the zone specified
+            */
             $res = $this->QueryByZone($zId);
-            echo $this->dbres->getLastError();
+//          echo $this->dbres->getLastError();
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
                 $selectedTrees[$i] = array(
@@ -32,6 +35,8 @@ class TreeTable {
         }
 
         private function QueryByZone($zone) {
+            /*Precondition: $zone is a valid zone Id integer, Database connected and populated
+             *Postcondition: Returns mysql_dataset of Tree info of trees in the zone specified*/
             return $this->dbres->query("SELECT TTreeId, TLat, TLong, TSpeciesId,
                           TDBH, THeight 
                     FROM  Tree INNER JOIN 
