@@ -15,6 +15,7 @@ class TreeTable {
 
         public function ByZone($zId) {
             $res = $this->QueryByZone($zId);
+            echo $this->dbres->getLastError();
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
                 $selectedTrees[$i] = array(
@@ -38,7 +39,7 @@ class TreeTable {
                             ZoneAreaMapping INNER JOIN Area 
                             ON (AAreaId = ZAPAreaId) 
                           ) ON (TAreaId = AAreaId)
-                    WHERE ZAPZoneId = {" . $this-dbres->escapeString($zone) . "} AND TRemoved = 0");
+                    WHERE ZAPZoneId = " . $this->dbres->escapeString($zone) . " AND TRemoved = 0");
          
         }
 }
