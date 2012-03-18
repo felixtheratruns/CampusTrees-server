@@ -19,7 +19,7 @@ class ZonePointTable {
             */
             $res = $this->QueryGetZones();
             $cur_zone = mysql_result($res, 0, 0);
-            $pointList[0][0] = array('lat' => (float)mysql_result($res, 0, 2), 'long' => (float)mysql_result($res, 0, 3));
+            $pointList[0][0] = array('lat' => (double)mysql_result($res, 0, 2), 'long' => (double)mysql_result($res, 0, 3));
             $i = 0;
             $j = 0;
             while ($row = mysql_fetch_assoc($res)) {
@@ -32,7 +32,7 @@ class ZonePointTable {
                     $j = 0;
                 }
                 $zoneIds[$i] = $row['ZPZoneId'];
-                $pointList[$i][$j] = array('lat' => (float)$row['ZPLat'], 'long' => (float)$row['ZPLong']);
+                $pointList[$i][$j] = array('lat' => (double)$row['ZPLat'], 'long' => (double)$row['ZPLong']);
             }
             $k = 0;
             foreach($zoneIds as $zoneId) {

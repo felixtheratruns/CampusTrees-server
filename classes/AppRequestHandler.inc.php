@@ -3,6 +3,7 @@
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
 require_once(ROOT_DIR . 'classes/ZonePointTable.inc.php');
 require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
+require_once(ROOT_DIR . 'classes/tree.inc.php');
 
 class ARHandler { /*Should probably create a generic
   Handler class and then make a App specific subclass with
@@ -25,6 +26,16 @@ class ARHandler { /*Should probably create a generic
             return True;
         }
 
+        public function RequestTById($tid) {
+            $t = new tree($tid);
+            return $t->getProperties();
+        }
+        public function getTree($tid) {
+            $t = new tree($tid);
+            echo $t->ToJSON();
+            $t2 = new tree(5, 29, 264376.08427, 1206561.72721, 22, 40, 170, 145);
+            echo $t2->ToJSON();
+        }
 
 //Species Table functions
         private function getSpeciesList() {
