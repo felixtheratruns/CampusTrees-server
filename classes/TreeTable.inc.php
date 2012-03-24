@@ -32,6 +32,26 @@ class TreeTable {
             return $selectedTrees;
         }
 
+        public function getTallest() {
+            $res = mysql_fetch_assoc($this->QueryTallest());
+            $tallestId = (int)$res['TTreeId'];
+            $tallestTree = new tree($tallestId);
+            return $tallestTree->getProperties();
+        }
+
+        public function getMCLife () { //Currently just returning filler data
+            $t = new tree(765);
+            return $t->getProperties();
+        }
+
+        public function getMCyear () {//Currently just returning filler data
+            $t = new tree(894);
+            return $t->getProperties();
+        }
+
+        private function QueryTallest() {
+            return $this->dbres->query("SELECT TTreeId FROM Tree ORDER BY THeight DESC LIMIT 1");
+        }
         private function QueryByZone($zone) {
             /*Precondition: $zone is a valid zone Id integer, Database connected and populated
              *Postcondition: Returns mysql_dataset of Tree info of trees in the zone specified*/

@@ -37,6 +37,18 @@ class ARHandler { /*Should probably create a generic
             echo $t2->ToJSON();
         }
 
+//Plant facts
+        private function getPFacts() {
+            $res["tallest"] = $this->tTable->getTallest();
+            $res["mostco2life"] = $this->tTable->getMCLife();
+            $res["mostco2year"] = $this->tTable->getMCYear();
+            return $res;
+        }
+
+        public function JSON_RequestPFacts() {
+            return json_encode($this->getPFacts());
+        }
+
 //Species Table functions
         private function getSpeciesList() {
             $this->speciesList = $this->sTable->GetSpecies();
@@ -73,9 +85,14 @@ class ARHandler { /*Should probably create a generic
             $this->selectedTrees = $this->tTable->ByZone($zId);
         }
 
+        public function RequestTreesByZone($zone) {
+            $this->SelectZone($zone);
+            return $this->selectedTrees;
+        }
+
         public function JSON_RequestTreesByZone($zone) {
             $this->SelectZone($zone);
-            echo json_encode($this->selectedTrees);
+            return json_encode($this->selectedTrees);
         }
 
         public function SelectedTrees_ToString() {
