@@ -57,11 +57,7 @@ class TreeTable {
              *Postcondition: Returns mysql_dataset of Tree info of trees in the zone specified*/
             return $this->dbres->query("SELECT TTreeId, TLat, TLong, TSpeciesId,
                           TDBH, THeight, TCrwnWidth1, TCrwnWidth2
-                    FROM  Tree INNER JOIN 
-                          (
-                            ZoneAreaMapping INNER JOIN Area 
-                            ON (AAreaId = ZAPAreaId) 
-                          ) ON (TAreaId = AAreaId)
+                    FROM  Tree INNER JOIN ZoneAreaMapping ON (TAreaId = ZAPAreaId)
                     WHERE ZAPZoneId = " . $this->dbres->escapeString($zone) . " AND TRemoved = 0");
          
         }
