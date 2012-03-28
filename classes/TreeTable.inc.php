@@ -22,7 +22,7 @@ class TreeTable {
 //          echo $this->dbres->getLastError();
             $i = 0;
             while ($row = mysql_fetch_assoc($res)) {
-                $t = new tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
+                $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
                               (float)$row['TLat'], (float)$row['TLong'],
                               (float)$row['TDBH'], (float)$row['THeight'],
                               (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);

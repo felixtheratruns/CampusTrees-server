@@ -3,6 +3,7 @@
 require_once(GCTOOLS_DIR . "database.inc.php");
 
 class Tree { 
+//General Properties
         //Lookup properties
 	protected $id;		//Tree ID
 	protected $sid;		//Species ID
@@ -15,6 +16,20 @@ class Tree {
 
         //Generated properties
         protected $vol;         //Tree volumne in BoardFeet
+
+//Admin properties
+        protected $recid;        //TRecId
+        protected $area;         //TAreaId
+        protected $quad;         //TQuadId
+        protected $dcrn;         //TDistCrn
+        protected $dtree;        //TDistTree
+        protected $crwnid;       //TCrwnId
+        protected $crwnarea;     //TCrwnArea
+        protected $removed;      //TRemoved
+        protected $comments;     //TComments
+        protected $createdate;   //TRecCreatedDate
+        protected $creatorid;    //TRecCreatorId
+        
 
         //Contructor
         public function Tree() {//$tid, $tsid, $tlat, $tlong,
@@ -35,16 +50,34 @@ class Tree {
             $this->genCalFields();
         }
         public function getProperties() {
-            return get_object_vars($this);
+            $properties = get_object_vars($this);
+            if (func_num_args() == 0) {//If not passed an arg, don't return admin properties
+                unset($properties['area']);
+                unset($properties['quad']);
+                unset($properties['dcrn']);
+                unset($properties['dtree']);
+                unset($properties['crwnid']);
+                unset($properties['crwnarea']);
+                unset($properties['removed']);
+                unset($properties['comments']);
+                unset($properties['createdate']);
+                unset($properties['creatorid']);
+                unset($properties['recid']);
+            }
+            return $properties;
         }
         public function ToJSON() {
-            return json_encode(get_object_vars($this));
+            $properties = $this->getProperties();
+            return json_encode($properties);
         }
         public function setId($id) {
             $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
             $res = mysql_fetch_assoc($dbres->query("SELECT TTreeId,
                 TSpeciesId, TLat, TLong, TDBH, 
-                THeight, TCrwnWidth1, TCrwnWidth2
+                THeight, TCrwnWidth1, TCrwnWidth2,
+                TAreaId, TQuadId, TDistCrn, TDistTree,
+                TCrwnId, TCrwnArea, TRemoved, TComments,
+                TRecCreatedDate, TRecCreatorId, TRecId
                 FROM Tree where TTreeId = " . $dbres->escapeString($id) . ""));
             //Now set all of the other attributes
             $this->id = (int)$res['TTreeId'];
@@ -55,6 +88,17 @@ class Tree {
             $this->height = (double)$res['THeight'];
             $this->cw1 = (double)$res['TCrwnWidth1'];
             $this->cw2 = (double)$res['TCrwnWidth2'];
+            $this->area = (int)$res['TAreaId'];
+            $this->quad = (int)$res['TQuadId'];
+            $this->dcrn = (float)$res['TDistCrn'];
+            $this->dtree = (float)$res['TDistTree'];
+            $this->crwnid = (int)$res['TCrwnId'];
+            $this->crwnarea = (float)$res['TCrwnArea'];
+            $this->removed = (bool)$res['TRemoved'];
+            $this->comments = $res['TComments'];
+            $this->createdate = $res['TRecCreatedDate'];
+            $this->creatorid = (int)$res['TRecCreatorId'];
+            $this->recid = (int)$res['TRecId'];
             return True;
         }     
 
