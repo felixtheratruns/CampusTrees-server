@@ -53,6 +53,7 @@ class ARHandler { /*Should probably create a generic
         private function getSpeciesList() {
             $this->speciesList = $this->sTable->GetSpecies();
         }
+
         public function JSON_RequestSpeciesList() {
             $this->getSpeciesList();
             return json_encode($this->speciesList);
@@ -107,6 +108,10 @@ class ARHandler { /*Should probably create a generic
                 $i++;
             }
         return $res;
+        }
+//Flowering/Fruiting
+        public function RequestFlower($month) {
+            return "Ok so I need to write the class to handle this";
         }
             
 }

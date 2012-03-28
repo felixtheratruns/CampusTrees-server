@@ -37,4 +37,22 @@ if (isset($_GET["t"])) {
         echo json_encode($handler->RequestTById($trees));
     }
 }
+
+if (isset($_GET["flowerMonth"])) {
+    $months = json_decode($_GET["flowerMonth"]);
+      if (isset($months[0])) {
+        $i = 0;
+        $json = "[";
+        while (isset($months[$i])) {
+            $json .= $handler->RequestFlower($months[$i]);
+            $json .= ",";
+            $i++;
+        }
+        $res = substr($json, 0, -1) . "]";
+    }
+    else {
+        $res = $handler->RequestFlower($months);
+    }
+    echo $res;
+}
 ?>
