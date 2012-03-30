@@ -13,7 +13,8 @@ require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
 <?php
 if (!isset($_GET['t'])) {
 //No tree selected, so list trees
-$tTable = new TreeTable();
+echo "PP";
+echo "<HEAD><meta http-equiv=\"REFRESH\" content=\"0;url=" . HOME ."admin/modules/list_tree.php?zone=1\"></HEAD>";
 }
 else {
 //Tree selected
