@@ -32,6 +32,24 @@ class TreeTable {
             return $selectedTrees;
         }
 
+        public function getAll($admin=false) {
+            $res = $this->QueryAll();
+//          echo $this->dbres->getLastError();
+            $i = 0;
+            if ($admin) {$selectedTrees = 0;}//Need to write this
+            else {
+                while ($row = mysql_fetch_assoc($res)) {
+                    $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
+                                  (float)$row['TLat'], (float)$row['TLong'],
+                                  (float)$row['TDBH'], (float)$row['THeight'],
+                                  (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);
+                    $selectedTrees[$i] = $t->getProperties();
+                    $i++;
+                }
+            }
+            return $selectedTrees;
+        }
+
         public function getTallest() {
             $res = mysql_fetch_assoc($this->QueryTallest());
             $tallestId = (int)$res['TTreeId'];
@@ -59,6 +77,13 @@ class TreeTable {
                           TDBH, THeight, TCrwnWidth1, TCrwnWidth2
                     FROM  Tree INNER JOIN ZoneAreaMapping ON (TAreaId = ZAPAreaId)
                     WHERE ZAPZoneId = " . $this->dbres->escapeString($zone) . " AND TRemoved = 0");
+         
+        }
+        private function QueryAll() {
+            return $this->dbres->query("SELECT TTreeId, TLat, TLong, TSpeciesId,
+                          TDBH, THeight, TCrwnWidth1, TCrwnWidth2
+                    FROM  Tree
+                    WHERE TRemoved = 0");
          
         }
 }
