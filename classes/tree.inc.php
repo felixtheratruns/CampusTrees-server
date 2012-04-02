@@ -139,7 +139,7 @@ class Tree {
             else {$EUquery .= "0)";}
 
             if (isset($f['TComments'])) {
-                $query .= "TComments = {$f['TComments']}, ";
+                $query .= "TComments = \"{$f['TComments']}\", ";
                 $any = True;
             }
 
