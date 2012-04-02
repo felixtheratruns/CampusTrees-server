@@ -23,11 +23,12 @@ $sTable = new SpeciesTable();
 $tree = $t->getProperties(True);
 $species = $sTable->GetSpecies();
 ?>
-<form name="edit_tree" method="POST">
+<form name="edit_tree" action="update_tree.php" method="POST">
 <h2>Basic Information</h2>
 Tree ID:<?php echo " {$tree['id']}"; ?><br />
+<input type="hidden" name="id" value="<?php echo $tree['id'];?>"><br />
 
-Tree Species: <select name="TTreeSpecies">
+Tree Species: <select name="sid">
 <?php 
 foreach ($species as $s) {
     $string = "<option value=\"{$s['sid']}\"";
@@ -38,19 +39,21 @@ foreach ($species as $s) {
 ?>
 </select><br />
 
-Tree Location: <input type="text" size="10" name="TTreeLat" value="<?php echo $tree['lat'];?>"> Lat, <input type="text" size="10" name="TTreeLong" value="<?php echo $tree['long'];?>"> Long<br />
+Tree Location: <input type="text" size="10" name="lat" value="<?php echo $tree['lat'];?>"> Lat, <input type="text" size="10" name="long" value="<?php echo $tree['long'];?>"> Long<br />
 <br />
 
 <h2>Measurements</h2>
-Tree Height: <input type="text" name="TTreeHeight" value="<?php echo $tree['height'];?>"><br />
+Tree Height: <input type="text" name="height" value="<?php echo $tree['height'];?>"><br />
 <br />
 
 <h2>Additional Information</h2>
-Tree Removed: <input type="checkbox" name="TTreeRemoved" <?php if ($tree['removed']) {echo " checked=\"checked\"";}?>><br />
+Tree Removed: <input type="checkbox" name="removed" value="true" <?php if ($tree['removed']) {echo " checked=\"checked\"";}?>><br />
 <br />
 
 <h2>Comments</h2>
-<textarea name="TTreeComments" rows="15" cols="120" ><?php echo $tree['comments'];?></textarea>
+<textarea name="comments" rows="15" cols="120" ><?php echo $tree['comments'];?></textarea>
+<br>
+<input type="submit" value="Submit">
 </form>
 <?php
 }

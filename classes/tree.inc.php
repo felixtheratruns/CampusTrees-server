@@ -102,6 +102,57 @@ class Tree {
             return True;
         }     
 
+        public function update($f) {
+            $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $any = false;
+            $EUquery = "INSERT INTO EntityUpdate (EUEntityTypeId, EUReferencedRecId,
+                        EUReferencedRecUpdatorId, EUReferencedRecInactivated)
+                        VALUES (1, {$this->id}, {$f['UserId']}, ";
+            $query = "UPDATE Tree SET ";
+
+            if (isset($f['TLat'])) {
+                $query .= "TLat = {$f['TLat']}, ";
+                $any = True;
+            }
+
+            if (isset($f['TLong'])) {
+                $query .= "TLong = {$f['TLong']}, ";
+                $any = True;
+            }
+
+            if (isset($f['TSpeciesId'])) {
+                $query .= "TSpeciesId = {$f['TSpeciesId']}, ";
+                $any = True;
+            }
+
+            if (isset($f['THeight'])) {
+                $query .= "THeight = {$f['THeight']}, ";
+                $any = True;
+            }
+
+            if (isset($f['TRemoved'])) {
+                $query .= "TRemoved = {$f['TRemoved']}, ";
+                if ($f['TRemoved']) {$EUquery .= "1)";}
+                else {$EUquery .= "0)";}
+                $any = True;
+            }
+            else {$EUquery .= "0)";}
+
+            if (isset($f['TComments'])) {
+                $query .= "TComments = {$f['TComments']}, ";
+                $any = True;
+            }
+
+            if ($any) {
+                $query = substr($query, 0, -2);
+                $query .= " WHERE TTreeId = {$this->id}";
+                echo $query;
+                echo "<br>";
+                echo $EUquery;
+                $dbres->query($query);
+                $dbres->query($EUquery);
+            }
+        }
         private function genCalFields() {
             $this->vol = $this->calVolume();
             return true;
