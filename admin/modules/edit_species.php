@@ -7,6 +7,8 @@ ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/species.inc.php');
 require_once(ROOT_DIR . 'classes/GenusTable.inc.php');
+require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
+require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 ?>
 
 <?php
@@ -23,6 +25,10 @@ else {
     $species = $s->getProperties(True);
     $gTable = new GenusTable();
     $genus = $gTable->getAll();
+    $fmTable = new FlowerMonthsTable();
+    $fms = $fmTable->monthsBySpecies($species['sid']);
+    $smTable = new SeedingMonthsTable();
+    $sms = $smTable->monthsBySpecies($species['sid']);
     ?>
     <h1>Edit Species</h1>
     <form name="edit_species" method="POST">
@@ -48,15 +54,36 @@ else {
     Tree native to KY: <input type="checkbox" name="nativity" value="ky" <?php if ($species['ky']) {echo "checked=\"checked\"";}?>><br />
     <br />
     
-    <h2>Fruit Information</h2>
-    Fruit Type: <input type="text" name="fruittype" value="<?php echo $species['fruittype']; ?>"><br />
-    Edible Fruit: <input type="checkbox" name="fruit" value="edible" <?php if ($species['edible']) {echo "checked=\"checked\"";}?>><br />
-    
-    <br />
-    <h2>Flower Information</h2>
-    Need to implement fruit/flow by month<br />
-    Flower Relative to Leaves: <input type="text" name="flowrelleaf" value="<?php echo $species['flowrelleaf']; ?>"><br />
-    <br />
+    <?php
+    if ($species['fruittype'] != 'none') {
+        ?>
+        <h2>Fruit Information</h2>
+        Fruit Type: <input type="text" name="fruittype" value="<?php echo $species['fruittype']; ?>"><br />
+        Edible Fruit: <input type="checkbox" name="fruit" value="edible" <?php if ($species['edible']) {echo "checked=\"checked\"";}?>><br />
+        Fruiting Months:<br />
+        <?php
+        foreach ($sms as $sm) {
+            echo "{$sm['mid']}<br>";
+        }
+        ?>
+        
+        <br />
+    <?php
+    }
+    if ($species['flowrelleaf'] != 0) {
+        ?>
+        <h2>Flower Information</h2>
+        Flower Relative to Leaves: <input type="text" name="flowrelleaf" value="<?php echo $species['flowrelleaf']; ?>"><br />
+        Flowering Months:<br />
+        <?php
+        foreach ($fms as $fm) {
+            echo "{$fm['mid']}<br>";
+        }
+        ?>
+        <br />
+        <?php
+    }
+    ?>
     <h2>Comments</h2>
     <textarea name="SComments" rows="8" cols="120"><?php echo $species['comments'];?></textarea>
     
