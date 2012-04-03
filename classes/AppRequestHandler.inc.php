@@ -39,9 +39,9 @@ class ARHandler { /*Should probably create a generic
 
 //Plant facts
         private function getPFacts() {
-            $res["tallest"] = $this->tTable->getTallest();
-            $res["mostco2life"] = $this->tTable->getMCLife();
-            $res["mostco2year"] = $this->tTable->getMCYear();
+            $res["Tallest"] = $this->tTable->getTallest();
+            $res["Most CO2 Sequestered in Lifetime"] = $this->tTable->getMCLife();
+            $res["Most CO2 Sequestered per Year"] = $this->tTable->getMCYear();
             return $res;
         }
 

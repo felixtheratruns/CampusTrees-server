@@ -6,14 +6,14 @@ require_once(ROOT_DIR . "classes/EntityUpdateTable.inc.php");
 class Tree { 
 //General Properties
         //Lookup properties
-	protected $id;		//Tree ID
-	protected $sid;		//Species ID
-	protected $lat;		//GPS Latitude
-	protected $long;	//GPS Longitude
-	protected $dbh;
-	protected $height;
-	protected $cw1;		//Crown width 1
-	protected $cw2;		//Crown width 2
+        protected $id;		//Tree ID
+        protected $sid;		//Species ID
+        protected $lat;		//GPS Latitude
+        protected $long;	//GPS Longitude
+        protected $dbh;
+        protected $height;
+        protected $cw1;		//Crown width 1
+        protected $cw2;		//Crown width 2
 
         //Generated properties
         protected $vol;         //Tree volumne in BoardFeet
@@ -110,34 +110,74 @@ class Tree {
             $query = "UPDATE Tree SET ";
             $remov = 0;
 
-            if (isset($f['TLat'])) {
-                $query .= "TLat = {$f['TLat']}, ";
+            if (isset($f['lat'])) {
+                $query .= "TLat = {$f['lat']}, ";
                 $any = True;
             }
 
-            if (isset($f['TLong'])) {
-                $query .= "TLong = {$f['TLong']}, ";
+            if (isset($f['long'])) {
+                $query .= "TLong = {$f['long']}, ";
                 $any = True;
             }
 
-            if (isset($f['TSpeciesId'])) {
-                $query .= "TSpeciesId = {$f['TSpeciesId']}, ";
+            if (isset($f['sid'])) {
+                $query .= "TSpeciesId = {$f['sid']}, ";
                 $any = True;
             }
 
-            if (isset($f['THeight'])) {
-                $query .= "THeight = {$f['THeight']}, ";
+            if (isset($f['height'])) {
+                $query .= "THeight = {$f['height']}, ";
                 $any = True;
             }
 
-            if (isset($f['TRemoved'])) {
-                $query .= "TRemoved = {$f['TRemoved']}, ";
-                if ($f['TRemoved']) {$remov = 1;}
+            if (isset($f['removed'])) {
+                $query .= "TRemoved = {$f['removed']}, ";
+                if ($f['removed']) {$remov = 1;}
                 $any = True;
             }
 
-            if (isset($f['TComments'])) {
-                $query .= "TComments = \"{$f['TComments']}\", ";
+            if (isset($f['comments'])) {
+                $query .= "TComments = \"{$f['comments']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['dbh'])) {
+                $query .= "TDBH = \"{$f['dbh']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['cw1'])) {
+                $query .= "TCrwnWidth1 = \"{$f['cw1']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['cw2'])) {
+                $query .= "TCrwnWidth2 = \"{$f['cw2']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['area'])) {
+                $query .= "TAreaId = \"{$f['area']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['quad'])) {
+                $query .= "TQuadId = \"{$f['quad']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['dcrn'])) {
+                $query .= "TDistCrn = \"{$f['dcrn']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['dtree'])) {
+                $query .= "TDistTree = \"{$f['dtree']}\", ";
+                $any = True;
+            }
+
+            if (isset($f['crwnid'])) {
+                $query .= "TCrwnId = \"{$f['crwnid']}\", ";
                 $any = True;
             }
 
@@ -147,7 +187,7 @@ class Tree {
 //              echo $query;
  //             echo "<br>";
                 $dbres->query($query);
-                $euTable->logUpdate(1, $this->id, $f['UserId'], $remov);
+                $euTable->logUpdate(1, $this->id, $f['uid'], $remov);
             }
         }
         private function genCalFields() {
