@@ -9,6 +9,7 @@ class Genus {
 	protected $gid;		//Genus ID
 	protected $genus;	//Genus name
 	protected $nick;	//Genus nickname
+        protected $count;
 	private $createdate;
 	private $creatorid;
 
@@ -24,7 +25,7 @@ class Genus {
 		//Query
                 if (!isset($gname)) {
                     $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
-		    $query = $dbres->Query("SELECT * FROM `Genus` WHERE `GGenusID`='" . $this->dbres->escapeString($genID) . "' LIMIT 1;");
+		    $query = $dbres->Query("SELECT * FROM `Genus` WHERE `GGenusID`='" . $dbres->escapeString($genID) . "' LIMIT 1;");
     
 		    //Check that query was a success
 		    if (!$query || mysql_num_rows($query) != 1)
@@ -39,6 +40,7 @@ class Genus {
 		    $this->nick = $data['GNickname'];
 		    $this->createdate = $data['GRecCreatedDate'];
 		    $this->creatorid = $data['GRecCreatorId'];
+                    $this->genCalFields();
                 }
                 else {
 		    $this->gid = $genID;
@@ -46,6 +48,7 @@ class Genus {
 		    $this->nick = $gnick;
 		    $this->createdate = $gcreate;
 		    $this->creatorid = $gcreator;
+                    $this->genCalFields();
                 }
 	}
 
@@ -99,12 +102,25 @@ class Genus {
         }
 
 	//Additional functions
+        private function genCalFields() {
+            $this->count = $this->calCount();
+        }
+
+        public function calCount() {
+            $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $res = $dbres->query("SELECT COUNT(*) FROM Tree inner join Species ON (TSpeciesId = SSpeciesId)
+                                  inner join Genus on (SGenusId = GGenusID)
+                                  WHERE GGenusId = {$dbres->escapeString($this->gid)}");
+            return mysql_result($res, 0);
+        }
+
 	public function getSpecies() {
 		//Precondition: None
-		//Postcondition: Return an array of species IDs, or FALSE if none exist
+		//Postcondition: Return an array of species IDs and common names, or FALSE if none exist
 
+                $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
 		//Query
-		$query = $this->dbres->Query("SELECT SSpeciesId FROM Species WHERE `SGenusId`='" . $this->dbres->escapeString($this->id) . "' ORDER BY `SSpeciesId` ASC;");
+		$query = $dbres->Query("SELECT SSpeciesId, SCommonName FROM Species WHERE `SGenusId`='" . $dbres->escapeString($this->gid) . "' ORDER BY `SSpeciesId` ASC;");
 
 		//Make sure it was a success
 		if (!$query)
@@ -118,7 +134,7 @@ class Genus {
 			$SArr = array();
 
 			while($row = mysql_fetch_assoc($query)) {
-				array_push($SArr, $row['SSpeciesId']);
+				array_push($SArr, array('sid' => $row['SSpeciesId'], 'commonname' => $row['SCommonName']));
 			}
 
 			//Return array

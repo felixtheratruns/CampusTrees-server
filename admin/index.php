@@ -16,8 +16,8 @@ else {
 You are currently logged in.
 <br>
 <a href="modules/list_tree.php">List Trees</a><br>
-<a href="modules/edit_tree.php">Edit Tree</a><br>
-<a href="modules/edit_species.php">Edit Species</a><br>
+<a href="modules/list_species.php">List Species</a><br>
+<a href="modules/list_genus.php">List Genus</a><br>
 <?php
 }
 ?>

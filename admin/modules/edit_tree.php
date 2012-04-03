@@ -123,8 +123,9 @@ else {//Tree selected - Display Form:
         $string .= ">{$s['commonname']}</option>";
         echo $string;
     }
+    echo "</select> <a href=\"edit_species.php?sid={$tree['sid']}\">Edit Species</a>";
     ?>
-    </select><br />
+    <br />
     
     <h2>Location</h2>
  <input type="text" size="10" name="lat" value="<?php echo $tree['lat'];?>"> Lat, <input type="text" size="10" name="long" value="<?php echo $tree['long'];?>"> Long<br />

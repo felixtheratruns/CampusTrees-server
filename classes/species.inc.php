@@ -13,6 +13,7 @@ class Species {
         protected $flowrelleaf; //SFlowerRelLeaves
         protected $fruittype;   //SFruitType
         protected $edible;      //SEdibleFruit
+        protected $count;      //SEdibleFruit
 
 //Admin Properties
 	protected $recid;       //SRecId
@@ -57,7 +58,14 @@ class Species {
         }
 
         public function genCalFields() { //need to cal tree count
-            echo "";
+            $this->count = $this->calCount();
+        }
+
+        public function calCount() {
+            $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $res = $dbres->query("SELECT COUNT(*) FROM Tree
+                                  WHERE TSpeciesId = {$dbres->escapeString($this->sid)}");
+            return mysql_result($res, 0);
         }
 
         public function setSid($sid) {

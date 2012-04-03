@@ -45,8 +45,10 @@ else {
         $string .= ">{$g['genus']}</option>";
         echo $string;
     }
+    echo "</select> <a href=\"edit_genus.php?gid={$species['gid']}\">Edit Genus</a>";
     ?>
-    </select><br />
+    <br />
+    Number of Trees:<?php echo " {$species['count']}"; ?><br>
     <br />
     
     <h2>Regional Information</h2>
