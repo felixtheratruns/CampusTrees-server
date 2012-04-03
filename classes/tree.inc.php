@@ -1,6 +1,7 @@
 <?php
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
+require_once(ROOT_DIR . "classes/EntityUpdateTable.inc.php");
 
 class Tree { 
 //General Properties
@@ -104,11 +105,10 @@ class Tree {
 
         public function update($f) {
             $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $euTable = new EntityUpdateTable();
             $any = false;
-            $EUquery = "INSERT INTO EntityUpdate (EUEntityTypeId, EUReferencedRecId,
-                        EUReferencedRecUpdatorId, EUReferencedRecInactivated)
-                        VALUES (1, {$this->id}, {$f['UserId']}, ";
             $query = "UPDATE Tree SET ";
+            $remov = 0;
 
             if (isset($f['TLat'])) {
                 $query .= "TLat = {$f['TLat']}, ";
@@ -132,11 +132,9 @@ class Tree {
 
             if (isset($f['TRemoved'])) {
                 $query .= "TRemoved = {$f['TRemoved']}, ";
-                if ($f['TRemoved']) {$EUquery .= "1)";}
-                else {$EUquery .= "0)";}
+                if ($f['TRemoved']) {$remov = 1;}
                 $any = True;
             }
-            else {$EUquery .= "0)";}
 
             if (isset($f['TComments'])) {
                 $query .= "TComments = \"{$f['TComments']}\", ";
@@ -146,11 +144,10 @@ class Tree {
             if ($any) {
                 $query = substr($query, 0, -2);
                 $query .= " WHERE TTreeId = {$this->id}";
-                echo $query;
-                echo "<br>";
-                echo $EUquery;
+//              echo $query;
+ //             echo "<br>";
                 $dbres->query($query);
-                $dbres->query($EUquery);
+                $euTable->logUpdate(1, $this->id, $f['UserId'], $remov);
             }
         }
         private function genCalFields() {

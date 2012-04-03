@@ -1,8 +1,9 @@
-This is an admin page!
 <?php
 //Check if a user is logged into the admin section
 $loggedIn = FALSE;
-
+if (isset($_GET['login'])) {
+    if ($_GET['login'] == 'ppp') {$loggedIn = true;}
+}
 //User is not logged in
 if ($loggedIn !== TRUE) {
 ?>
@@ -13,6 +14,10 @@ This is the admin page!
 else {
 ?>
 You are currently logged in.
+<br>
+<a href="modules/list_tree.php">List Trees</a><br>
+<a href="modules/edit_tree.php">Edit Tree</a><br>
+<a href="modules/edit_species.php">Edit Species</a><br>
 <?php
 }
 ?>
