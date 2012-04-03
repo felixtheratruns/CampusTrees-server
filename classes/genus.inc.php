@@ -5,16 +5,15 @@
 require_once(GCTOOLS_DIR . "database.inc.php");
 
 class Genus {
-	private $dbres;		//Database resource
 	
-	protected $id;		//Genus ID
-	protected $name;	//Genus name
+	protected $gid;		//Genus ID
+	protected $genus;	//Genus name
 	protected $nick;	//Genus nickname
-	private $createDate;
-	private $createdBy;
+	private $createdate;
+	private $creatorid;
 
 	//Class constructor
-	public function Genus($genID) {
+	public function Genus($genID, $gname=null, $gnick=null, $gcreate=null, $gcreator=null) {
 		//Precondition checking
 		if (!isset($genID) || empty($genID) || $genID <=0)
 			throw new Exception("A proper Genus ID was not provided");
@@ -23,26 +22,36 @@ class Genus {
 		//$this->dbres = new MySQL();
 
 		//Query
-		$query = $this->dbres->Query("SELECT * FROM `Genus` WHERE `GGenusID`='" . $this->dbres->escapeString($genID) . "' LIMIT 1;");
-
-		//Check that query was a success
-		if (!$query || mysql_num_rows($query) != 1)
-			throw new Exception("The Genus was not found in the database.");
-
-		//Pull data
-		$data = mysql_fetch_assoc($query);
-
-		//Set data
-		$this->id = $genID;
-		$this->name = $data['GGenus'];
-		$this->nick = $data['GNickname'];
-		$this->createDate = $data['GRecCreatedDate'];
-		$this->createdBy = $data['GRecCreatorId'];
+                if (!isset($gname)) {
+                    $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+		    $query = $dbres->Query("SELECT * FROM `Genus` WHERE `GGenusID`='" . $this->dbres->escapeString($genID) . "' LIMIT 1;");
+    
+		    //Check that query was a success
+		    if (!$query || mysql_num_rows($query) != 1)
+			    throw new Exception("The Genus was not found in the database.");
+    
+		    //Pull data
+		    $data = mysql_fetch_assoc($query);
+    
+		    //Set data
+		    $this->gid = $genID;
+		    $this->genus = $data['GGenus'];
+		    $this->nick = $data['GNickname'];
+		    $this->createdate = $data['GRecCreatedDate'];
+		    $this->creatorid = $data['GRecCreatorId'];
+                }
+                else {
+		    $this->gid = $genID;
+		    $this->genus = $gname;
+		    $this->nick = $gnick;
+		    $this->createdate = $gcreate;
+		    $this->creatorid = $gcreator;
+                }
 	}
 
 	//Getters and Setters
 	public function getID() {
-		return $this->id;
+		return $this->gid;
 	}
 	protected function setID($newID) {
 		//Precondition checking
@@ -50,14 +59,14 @@ class Genus {
 			return FALSE;
 
 		//Set the variable
-		$this->id = $newID;
+		$this->gid = $newID;
 
 		//Fin
 		return TRUE;
 	}
 
 	public function getName() {
-		return $this->name;
+		return $this->genus;
 	}
 	protected function setName($newName) {
 		//Precondition checking
@@ -65,7 +74,7 @@ class Genus {
 			return FALSE;
 
 		//Set the variable
-		$this->name = $newName;
+		$this->genus = $newName;
 
 		return TRUE;
 	}
@@ -83,6 +92,11 @@ class Genus {
 
 		return TRUE;
 	}
+
+        public function getProperties() {
+            $properties = get_object_vars($this);
+            return $properties;
+        }
 
 	//Additional functions
 	public function getSpecies() {

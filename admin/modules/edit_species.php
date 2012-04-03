@@ -1,35 +1,66 @@
 <?php
 //Require authenticaiton here
 
+$user = 1;
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+require_once('../../config.inc.php');
+require_once(ROOT_DIR . 'classes/species.inc.php');
+require_once(ROOT_DIR . 'classes/GenusTable.inc.php');
 ?>
 
-<h1>Edit Species</h1>
 <?php
-if (!isset($_GET['id'])) {
-//No species selected, so list species
+if (isset($_POST['sid'])) { //IF Handling an update:
+}
+if (!isset($_GET['sid'])) {
+    //No species selected, so list species
+    echo "<HEAD><meta http-equiv=\"REFRESH\" content=\"0;url=" . HOME ."admin/modules/list_species.php\"></HEAD>";
 }
 else {
-//Species selected
-$id = $_GET['id'];
-?>
-<form name="edit_species" method="POST">
-<h2>Basic Information</h2>
-Species ID:<br />
-Species Name: <input type="text" name="SCommonName"><br />
-Genus: <select name="SGenusID">
-<option value="NULL" selected>Select a Genus</option>
-</select><br />
-<br />
-
-<h2>Regional Information</h2>
-Tree native to America: <input type="checkbox" name="SNAmerica"><br />
-Tree native to KY: <input type="checkbox" name="SNKy"><br />
-<br />
-
-<h2>Comments</h2>
-<textarea name="SComments" rows="8" cols="120"></textarea>
-
-</form>
-<?php
+    //Species selected
+    $sid = $_GET['sid'];
+    $s = new species($sid);
+    $species = $s->getProperties(True);
+    $gTable = new GenusTable();
+    $genus = $gTable->getAll();
+    ?>
+    <h1>Edit Species</h1>
+    <form name="edit_species" method="POST">
+    <h2>Basic Information</h2>
+    Species ID:<?php echo " {$species['sid']}"; ?><br />
+    <a href="list_species.php">Species List</a><br><br>
+    Common Name: <input type="text" name="commonname" value="<?php echo $species['commonname']; ?>"><br />
+    Species Name: <input type="text" name="species" value="<?php echo $species['species']; ?>"><br />
+    Genus: <select name="gid">
+    <?php
+    foreach ($genus as $g) {
+        $string = "<option value=\"{$g['gid']}\"";
+        if ($g['gid'] == $species['gid']) {$string .= "selected";}
+        $string .= ">{$g['genus']}</option>";
+        echo $string;
+    }
+    ?>
+    </select><br />
+    <br />
+    
+    <h2>Regional Information</h2>
+    Tree native to America: <input type="checkbox" name="nativity" value="american" <?php if ($species['american']) {echo "checked=\"checked\"";}?>><br />
+    Tree native to KY: <input type="checkbox" name="nativity" value="ky" <?php if ($species['ky']) {echo "checked=\"checked\"";}?>><br />
+    <br />
+    
+    <h2>Fruit Information</h2>
+    Fruit Type: <input type="text" name="fruittype" value="<?php echo $species['fruittype']; ?>"><br />
+    Edible Fruit: <input type="checkbox" name="fruit" value="edible" <?php if ($species['edible']) {echo "checked=\"checked\"";}?>><br />
+    
+    <br />
+    <h2>Flower Information</h2>
+    Need to implement fruit/flow by month<br />
+    Flower Relative to Leaves: <input type="text" name="flowrelleaf" value="<?php echo $species['flowrelleaf']; ?>"><br />
+    <br />
+    <h2>Comments</h2>
+    <textarea name="SComments" rows="8" cols="120"><?php echo $species['comments'];?></textarea>
+    
+    </form>
+    <?php
 }
 ?>

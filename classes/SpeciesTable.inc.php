@@ -14,21 +14,24 @@ class SpeciesTable {
 
         }
 
-        public function GetSpecies() {
+        public function GetSpecies($admin=false) {
             /*Precondition: Database connected and populated
              *Postcondition: Returns JSON optimized array of species info.
             */
             $res = $this->QueryGetSpecies();
             echo $this->dbres->getLastError();
             $i = 0;
-            while ($row = mysql_fetch_assoc($res)) {
-                $s = new Species ((int)$row['SSpeciesId'],
-                  $row['SCommonName'], (bool)$row['SNAmerica'],
-                  (bool)$row['SKy'], (bool)$row['SNonNative'],
-                  $row['SComments'], (int)$row['SFlowerRelLeaves'],
-                  $row['SFruitType'], (bool)$row['SEdibleFruit']);
-            $selectedSpecies[$i] = $s->getProperties();
-            $i++;
+            if ($admin) {}//Write meeeee
+            else {
+                while ($row = mysql_fetch_assoc($res)) {
+                    $s = new Species ((int)$row['SSpeciesId'],
+                      $row['SCommonName'], (bool)$row['SNAmerica'],
+                      (bool)$row['SKy'], (bool)$row['SNonNative'],
+                      $row['SComments'], (int)$row['SFlowerRelLeaves'],
+                      $row['SFruitType'], (bool)$row['SEdibleFruit']);
+                    $selectedSpecies[$i] = $s->getProperties();
+                    $i++;
+                }
             }
             return $selectedSpecies;
         }
