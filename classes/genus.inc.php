@@ -3,6 +3,7 @@
 
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
+require_once(ROOT_DIR . 'classes/EntityUpdateTable.inc.php');
 
 class Genus {
 	
@@ -141,5 +142,33 @@ class Genus {
 			return $SArr;
 		}
 	}
+        
+        public function update($f) {
+            $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $euTable = new EntityUpdateTable();
+            $any = false;
+            $query = "UPDATE Genus SET ";
+            $remov = 0; //Need to implement remove for Genus
+
+            if (isset($f['genus'])) {
+                $query .= "GGenus = '{$dbres->escapeString($f['genus'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['nick'])) {
+                $query .= "GNickname = '{$dbres->escapeString($f['nick'])}', ";
+                $any = True;
+            }
+
+            if ($any) {
+                $query = substr($query, 0, -2);
+                $query .= " WHERE GGenusId = {$this->gid}";
+//              echo $query;
+ //             echo "<br>";
+                $dbres->query($query);
+                $euTable->logUpdate(3, $this->gid, $f['uid'], $remov);
+            }
+        }
+
 }
 ?>
