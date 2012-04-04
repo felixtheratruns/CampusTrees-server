@@ -1,6 +1,7 @@
 <?php
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
+require_once(ROOT_DIR . "classes/EntityUpdateTable.inc.php");
 
 class Species {
 	
@@ -92,5 +93,75 @@ class Species {
             $this->creatorid = (int)$res['SRecCreatorId'];
             return True;
         }     
+
+        public function update($f) {
+            $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $euTable = new EntityUpdateTable();
+            $any = false;
+            $query = "UPDATE Species SET ";
+            $remov = 0; //Need to implement removal for species
+
+            if (isset($f['american'])) {
+                $query .= "SNAmerica = '{$dbres->escapeString($f['american'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['ky'])) {
+                $query .= "SKy = '{$dbres->escapeString($f['ky'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['edible'])) {
+                $query .= "SEdibleFruit = '{$dbres->escapeString($f['edible'])}', ";//Won't work when 0 because of escape
+                $any = True;
+            }
+
+            if (isset($f['commonname'])) {
+                $query .= "SCommonName = '{$dbres->escapeString($f['commonname'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['species'])) {
+                $query .= "SSpecies = '{$dbres->escapeString($f['species'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['gid'])) {
+                $query .= "SGenusId = '{$dbres->escapeString($f['gid'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['fruittype'])) {
+                $query .= "SFruitType= '{$dbres->escapeString($f['fruittype'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['flowrelleaf'])) {
+                $query .= "SFlowerRelLeaves = '{$dbres->escapeString($f['flowrelleaf'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['comments'])) {
+                $query .= "SComments= \"{$dbres->escapeString($f['comments'])}\", ";
+                $any = True;
+            }
+
+
+            if ($any) {
+                $query = substr($query, 0, -2);
+                $query .= " WHERE SSpeciesId = {$this->sid}";
+//              echo $query;
+//              echo "<br>";
+                $dbres->query($query);
+                $euTable->logUpdate(2, $this->sid, $f['uid'], $remov);
+            }
+        }
+
+        private function repNull($maybeNull) {
+            if (!isset($maybeNull)) {return 0;}
+            return $maybeNull;
+        }
+
+
 }
 ?>
