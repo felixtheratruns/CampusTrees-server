@@ -176,7 +176,7 @@ else {
     foreach ($hist as $row) {
         echo "Edited: {$row['date']} by 
               <a href=\"view_user.php?uid={$row['uid']}\">{$row['uname']}</a>";
-        if ($row['rem'] == 1) {echo " Tree Removed"; }
+        if ($row['rem'] == 1) {echo " Species Removed"; }
         echo "<br>";
     }
 }
