@@ -111,73 +111,73 @@ class Tree {
             $remov = 0;
 
             if (isset($f['lat'])) {
-                $query .= "TLat = {$f['lat']}, ";
+                $query .= "TLat = '{$dbres->escapeString($f['lat'])}', ";
                 $any = True;
             }
 
             if (isset($f['long'])) {
-                $query .= "TLong = {$f['long']}, ";
+                $query .= "TLong = '{$dbres->escapeString($f['long'])}', ";
                 $any = True;
             }
 
             if (isset($f['sid'])) {
-                $query .= "TSpeciesId = {$f['sid']}, ";
+                $query .= "TSpeciesId = '{$dbres->escapeString($f['sid'])}', ";
                 $any = True;
             }
 
             if (isset($f['height'])) {
-                $query .= "THeight = {$f['height']}, ";
+                $query .= "THeight = '{$dbres->escapeString($f['height'])}', ";
                 $any = True;
             }
 
             if (isset($f['removed'])) {
-                $query .= "TRemoved = {$f['removed']}, ";
+                $query .= "TRemoved = '{$dbres->escapeString($f['removed'])}', ";
                 if ($f['removed']) {$remov = 1;}
                 $any = True;
             }
 
             if (isset($f['comments'])) {
-                $query .= "TComments = \"{$f['comments']}\", ";
+                $query .= "TComments = \"{$dbres->escapeString($f['comments'])}\", ";
                 $any = True;
             }
 
             if (isset($f['dbh'])) {
-                $query .= "TDBH = \"{$f['dbh']}\", ";
+                $query .= "TDBH = '{$dbres->escapeString($f['dbh'])}', ";
                 $any = True;
             }
 
             if (isset($f['cw1'])) {
-                $query .= "TCrwnWidth1 = \"{$f['cw1']}\", ";
+                $query .= "TCrwnWidth1 = '{$dbres->escapeString($f['cw1'])}', ";
                 $any = True;
             }
 
             if (isset($f['cw2'])) {
-                $query .= "TCrwnWidth2 = \"{$f['cw2']}\", ";
+                $query .= "TCrwnWidth2 = '{$dbres->escapeString($f['cw2'])}', ";
                 $any = True;
             }
 
             if (isset($f['area'])) {
-                $query .= "TAreaId = \"{$f['area']}\", ";
+                $query .= "TAreaId = '{$dbres->escapeString($f['area'])}', ";
                 $any = True;
             }
 
             if (isset($f['quad'])) {
-                $query .= "TQuadId = \"{$f['quad']}\", ";
+                $query .= "TQuadId = '{$dbres->escapeString($f['quad'])}', ";
                 $any = True;
             }
 
             if (isset($f['dcrn'])) {
-                $query .= "TDistCrn = \"{$f['dcrn']}\", ";
+                $query .= "TDistCrn = '{$dbres->escapeString($f['dcrn'])}', ";
                 $any = True;
             }
 
             if (isset($f['dtree'])) {
-                $query .= "TDistTree = \"{$f['dtree']}\", ";
+                $query .= "TDistTree = '{$dbres->escapeString($f['dtree'])}', ";
                 $any = True;
             }
 
             if (isset($f['crwnid'])) {
-                $query .= "TCrwnId = \"{$f['crwnid']}\", ";
+                $query .= "TCrwnId = '{$dbres->escapeString($f['crwnid'])}', ";
                 $any = True;
             }
 
