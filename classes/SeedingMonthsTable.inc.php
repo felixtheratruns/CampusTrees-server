@@ -34,7 +34,12 @@ class SeedingMonthsTable {
             $i++;
         }
         if (isset($recs)) {return $recs;}
-        else {return array('sid' => 0);}
+        else {return array(array('sid' => 0, 'mid' => $month));}
+    }
+
+    public function JSON_speciesByMonth($month) {
+        $res = $this->speciesByMonth($month);
+        return json_encode($res);
     }
 
     public function monthsBySpecies($species) {

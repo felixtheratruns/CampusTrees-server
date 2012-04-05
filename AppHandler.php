@@ -3,7 +3,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 require_once('config.inc.php');
 require_once(ROOT_DIR . 'classes/AppRequestHandler.inc.php');
+require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
+require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 $handler = new ARHandler();
+$fmTable = new FlowerMonthsTable();
+$smTable = new SeedingMonthsTable();
 
 if (isset($_GET["zoneRequest"])) {
     echo $handler->JSON_RequestZoneList();
@@ -44,14 +48,32 @@ if (isset($_GET["flowerMonth"])) {
         $i = 0;
         $json = "[";
         while (isset($months[$i])) {
-            $json .= $handler->RequestFlower($months[$i]);
+            $json .= $fmTable->JSON_speciesByMonth($months[$i]);
             $json .= ",";
             $i++;
         }
         $res = substr($json, 0, -1) . "]";
     }
     else {
-        $res = $handler->RequestFlower($months);
+        $res = $fmTable->JSON_speciesByMonth($months);
+    }
+    echo $res;
+}
+
+if (isset($_GET["fruitMonth"])) {
+    $months = json_decode($_GET["fruitMonth"]);
+      if (isset($months[0])) {
+        $i = 0;
+        $json = "[";
+        while (isset($months[$i])) {
+            $json .= $smTable->JSON_speciesByMonth($months[$i]);
+            $json .= ",";
+            $i++;
+        }
+        $res = substr($json, 0, -1) . "]";
+    }
+    else {
+        $res = $smTable->JSON_speciesByMonth($months);
     }
     echo $res;
 }
