@@ -29,7 +29,7 @@ class FlowerMonthsTable {
         $res = $this->QueryByMonth($month);
         $i = 0;
         while ($row = mysql_fetch_assoc($res)) {
-            $fmRec = new FlowerMonthsRecord($row['FMSpeciesId'], $row['FMMonthId']);
+            $fmRec = new FlowerMonthsRecord((int)$row['FMSpeciesId'],(int) $row['FMMonthId']);
             $recs[$i] = $fmRec->getProperties();
             $i++;
         }
@@ -46,7 +46,7 @@ class FlowerMonthsTable {
         $res = $this->QueryBySpecies($species);
         $i = 0;
         while ($row = mysql_fetch_assoc($res)) {
-            $fmRec = new FlowerMonthsRecord($row['FMSpeciesId'], $row['FMMonthId']);
+            $fmRec = new FlowerMonthsRecord((int)$row['FMSpeciesId'], (int)$row['FMMonthId']);
             $recs[$i] = $fmRec->getProperties();
             $i++;
         }

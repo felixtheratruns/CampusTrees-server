@@ -29,7 +29,7 @@ class SeedingMonthsTable {
         $res = $this->QueryByMonth($month);
         $i = 0;
         while ($row = mysql_fetch_assoc($res)) {
-            $smRec = new SeedingMonthsRecord($row['SMSpeciesId'], $row['SMMonthId']);
+            $smRec = new SeedingMonthsRecord((int)$row['SMSpeciesId'], (int)$row['SMMonthId']);
             $recs[$i] = $smRec->getProperties();
             $i++;
         }
@@ -46,7 +46,7 @@ class SeedingMonthsTable {
         $res = $this->QueryBySpecies($species);
         $i = 0;
         while ($row = mysql_fetch_assoc($res)) {
-            $smRec = new SeedingMonthsRecord($row['SMSpeciesId'], $row['SMMonthId']);
+            $smRec = new SeedingMonthsRecord((int)$row['SMSpeciesId'], (int)$row['SMMonthId']);
             $recs[$i] = $smRec->getProperties();
             $i++;
         }
