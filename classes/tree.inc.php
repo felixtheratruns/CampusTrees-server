@@ -17,13 +17,20 @@ class Tree {
 
         //Generated properties
         protected $vol;         //Tree volumne in BoardFeet
-        protected $greenwt;     /** Calculated Green Weight of Tree */
-        protected $drywt;     /** Calculated Dry Weight of Tree */
-        protected $carbonwt;     /** Calculated Weight of Carbon in Tree */
-        protected $co2seqwt;     /** Calculated Weight of CO2 Sequestered in Tree */
-        protected $age;     /** Calculated Age of Tree */
-        protected $co2pyear;     /** Calculated CO2 Sequestered Per Year */
-        protected $crownarea;     /** Calculated Area of Crown */
+/** Calculated Green Weight of Tree */
+        protected $greenwt;     
+/** Calculated Dry Weight of Tree */
+        protected $drywt;     
+/** Calculated Weight of Carbon in Tree */
+        protected $carbonwt;     
+/** Calculated Weight of CO2 Sequestered in Tree */
+        protected $co2seqwt;     
+/** Calculated Age of Tree */
+        protected $age;     
+/** Calculated CO2 Sequestered Per Year */
+        protected $co2pyear;     
+/** Calculated Area of Crown */
+        protected $crownarea;     
 
 //Admin properties
         protected $recid;        //TRecId
