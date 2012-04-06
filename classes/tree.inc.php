@@ -17,6 +17,13 @@ class Tree {
 
         //Generated properties
         protected $vol;         //Tree volumne in BoardFeet
+        protected $greenwt;     /** Calculated Green Weight of Tree */
+        protected $drywt;     /** @property Calculated Dry Weight of Tree */
+        protected $carbonwt;     /** @property Calculated Weight of Carbon in Tree */
+        protected $co2seqwt;     /** @property Calculated Weight of CO2 Sequestered in Tree */
+        protected $age;     /** @property Calculated Age of Tree */
+        protected $co2pyear;     /** @property Calculated CO2 Sequestered Per Year */
+        protected $crownarea;     /** @property Calculated Area of Crown */
 
 //Admin properties
         protected $recid;        //TRecId
@@ -192,14 +199,60 @@ class Tree {
         }
         private function genCalFields() {
             $this->vol = $this->calVolume();
+            $this->greenwt = $this->calGWeight();
+            $this->drywt = $this->calDWeight();
+            $this->carbonwt = $this->calCWeight();
+            $this->co2seqwt = $this->calSWeight();
+            $this->age = $this->calAge();
+            $this->co2pyear = $this->calCO2PerYear();
+            $this->crownarea = $this->calCrownArea();
             return true;
         }
 
-        Private function calVolume() {//Returns volume in BoardFeet!
+        Private function calVolume() {/** @return Volume of Tree. */
             $radius = $this->dbh/24;
             $area = ($radius*$radius)*pi();
             $cubicfeet = ($area*$this->height)/4;
             return round($cubicfeet*12,3);
         }
+
+        Private function calGWeight() {/** @return Green Weight of Tree. */
+            if ($this->dbh < 11) {return 0.25*$this->dbh*$this->height*1.2;}
+            else {return 0.15*$this->dbh*$this->height*1.2;}
+        }
+
+        Private function calDWeight() {/** @return Dry Weight of Tree. */
+            if (!isset($this->greenwt)) {
+                $this->greenwt = $this->calGWeight();
+            }
+            return $this->greenwt*.725;
+        }
+
+        Private function calCWeight() {/** @return Weight of Carbon in Tree. */
+            if (!isset($this->drywt)) {
+                $this->drywt = $this->calDWeight();
+            }
+            return $this->drywt*.5;
+        }
+
+        Private function calSWeight() {/** @return Weight of CO2 Sequestered in Tree. */
+            if (!isset($this->carbonwt)) {
+                $this->carbonwt = $this->calCWeight();
+            }
+            return $this->carbonwt*3.6663;
+        }
+
+        Private function calAge() {/** @return Tree Age. *///TODO:cal Age once have coeff
+            return 0;
+        }
+
+        Private function calCO2PerYear() {/** @return CO2 Seqeustered per year. *///TODO:cal seq per year once have Age
+            return 0;//Divide $this->co2seqwt/$this->age;
+        }
+
+        Private function calCrownArea() {/** @return Area of Crown. *///TODO:cal Area of Crown once get info on Crown Ids
+            return 0;//Something to do the a crown id coeff and the 2 crown widths
+        }
+
 }
 ?>

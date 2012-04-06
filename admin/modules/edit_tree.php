@@ -126,6 +126,17 @@ else {//Tree selected - Display Form:
     echo "</select> <a href=\"edit_species.php?sid={$tree['sid']}\">Edit Species</a>";
     ?>
     <br />
+
+    <h2>Calculated Data:</h2>
+    Age:<?php echo " {$tree['age']}"; ?><br />
+    Volume:<?php echo " {$tree['vol']}"; ?><br />
+    Green Weight:<?php echo " {$tree['greenwt']}"; ?><br />
+    Dry Weight:<?php echo " {$tree['drywt']}"; ?><br />
+    Weight of Carbon:<?php echo " {$tree['carbonwt']}"; ?><br />
+    Weight of CO2(Lifetime):<?php echo " {$tree['co2seqwt']}"; ?><br />
+    Weight of CO2 (per Year):<?php echo " {$tree['co2pyear']}"; ?><br />
+    Area of Crown:<?php echo " {$tree['crownarea']}"; ?><br />
+    <br>
     
     <h2>Location</h2>
  <input type="text" size="10" name="lat" value="<?php echo $tree['lat'];?>"> Lat, <input type="text" size="10" name="long" value="<?php echo $tree['long'];?>"> Long<br />
