@@ -50,6 +50,22 @@ class TreeTable {
             return $selectedTrees;
         }
 
+        public function getStats() {
+            $res["Tallest"] = $this->getTallest();
+            $forest = $this->getAll();
+            $res["Most CO2 Sequestered in Lifetime"] = $this->getMCLife($forest);
+            $res["Most CO2 Sequestered per Year"] = $this->getMCYear($forest);
+            $res["Heaviest"] = $this->getHeaviest($forest);
+            $res["Oldest"] = $this->getOldest($forest);
+            $res["Largest DBH"] = $this->getLDBH($forest);
+            $res["Largest Crown Area"] = $this->getLCrown($forest);
+            return $res;
+        }
+
+        public function JSON_getStats() {
+            return json_encode($this->getStats());
+        }
+
         public function getTallest() {
             $res = mysql_fetch_assoc($this->QueryTallest());
             $tallestId = (int)$res['TTreeId'];
@@ -57,14 +73,70 @@ class TreeTable {
             return $tallestTree->getProperties();
         }
 
-        public function getMCLife () { //Currently just returning filler data
-            $t = new tree(765);
+        public function getLCrown ($forest) { //Currently just returning filler data
+            $max = array('crownarea' => 0);
+            foreach ($forest as $tree) {
+                if ($tree['crownarea'] > $max['crownarea']) {
+                    $max = $tree;
+                }
+            }
+            $t = new tree(1275);
             return $t->getProperties();
+//          return $max;
         }
 
-        public function getMCyear () {//Currently just returning filler data
-            $t = new tree(894);
+        public function getLDBH ($forest) {
+            $max = array('dbh' => 0);
+            foreach ($forest as $tree) {
+                if ($tree['dbh'] > $max['dbh']) {
+                    $max = $tree;
+                }
+            }
+            return $max;
+        }
+
+        public function getOldest ($forest) { //Currently just returning filler data
+            $max = array('age' => 0);
+            foreach ($forest as $tree) {
+                if ($tree['age'] > $max['age']) {
+                    $max = $tree;
+                }
+            }
+            $t = new tree(1275);
             return $t->getProperties();
+//          return $max;
+        }
+
+        public function getHeaviest ($forest) { 
+            $max = array('greenwt' => 0);
+            foreach ($forest as $tree) {
+                if ($tree['greenwt'] > $max['greenwt']) {
+                    $max = $tree;
+                }
+            }
+            return $max;
+        }
+
+        public function getMCLife ($forest) { 
+            $max = array('co2seqwt' => 0);
+            foreach ($forest as $tree) {
+                if ($tree['co2seqwt'] > $max['co2seqwt']) {
+                    $max = $tree;
+                }
+            }
+            return $max;
+        }
+
+        public function getMCyear ($forest) {//Currently just returning filler data
+            $max = array('co2pyear' => 0);
+            foreach ($forest as $tree) {
+                if ($tree['co2pyear'] > $max['co2pyear']) {
+                    $max = $tree;
+                }
+            }
+            $t = new tree(1275);
+            return $t->getProperties();
+//          return $max;
         }
 
         private function QueryTallest() {
