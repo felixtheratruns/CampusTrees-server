@@ -51,8 +51,13 @@ class FlowerMonthsTable {
             $i++;
         }
         if (isset($recs)) {return $recs;}
-        else {return array('mid' => 0);}
+        else {return array(array('sid' => 0, 'mid' => $species));}
 
+    }
+
+    public function JSON_monthsBySpecies($species) {
+        $res = $this->monthsBySpecies($species);
+        return json_encode($res);
     }
 
     private function QueryByMonth($month) {
