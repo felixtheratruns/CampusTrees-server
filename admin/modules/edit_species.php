@@ -126,7 +126,7 @@ else {
     echo "</select> <a href=\"edit_genus.php?gid={$species['gid']}\">Edit Genus</a>";
     ?>
     <br />
-    Number of Trees:<?php echo " {$species['count']}"; ?><br>
+    Number of Trees:<?php echo " <a href=\"list_tree.php?sid={$species['sid']}\">{$species['count']}</a>"; ?><br>
     <br />
     
     <h2>Regional Information</h2>

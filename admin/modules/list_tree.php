@@ -40,6 +40,8 @@ if (isset($_GET["zone"])) {
 else {
     $i = 0;
     $forest = $tTable->getAll();
+    if(isset($_GET["gid"])) {$forest = $tTable->filterGenus($forest, json_decode($_GET["gid"]));}
+    if(isset($_GET["sid"])) {$forest = $tTable->filterSpecies($forest, json_decode($_GET["sid"]));}
     $html .= "<table border=\"1\">";
     $html .= "<tr><th>Id</th><th>Sid</th><th>lat</th><th>long</th><th>dbh</th><th>height</th><th>cw1</th><th>cw2</th><th>vol</th><th>GreenWt</th><th>DryWt</th><th>CarbonWeight</th><th>CO2Life</th><th>Age</th><th>CO2Year</th><th>Crown Area</th></tr>";
     foreach ($forest as $row) {

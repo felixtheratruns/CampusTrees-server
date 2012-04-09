@@ -20,10 +20,23 @@ class SpeciesTable {
             */
             $res = $this->QueryGetSpecies();
             echo $this->dbres->getLastError();
+            return $this->buildList($admin, $res);
+        }
+
+        public function GetSpeciesByGenus($gid, $admin=false) {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns JSON optimized array of species info.
+            */
+            $res = $this->QueryGetSpeciesByGenus($gid);
+            echo $this->dbres->getLastError();
+            return $this->buildList($admin, $res);
+        }
+
+        private function buildList($admin, $sqlres) {
             $i = 0;
             if ($admin) {}//Write meeeee
             else {
-                while ($row = mysql_fetch_assoc($res)) {
+                while ($row = mysql_fetch_assoc($sqlres)) {
                     $s = new Species ((int)$row['SSpeciesId'],
                       $row['SCommonName'], (bool)$row['SNAmerica'],
                       (bool)$row['SKy'], (bool)$row['SNonNative'],
@@ -43,6 +56,16 @@ class SpeciesTable {
                           SNAmerica, SKy, SNonNative, SComments,
                           SFlowerRelLeaves, SFruitType, SEdibleFruit
                     FROM  Species
+                    ");
+         
+        }
+        private function QueryGetSpeciesByGenus($gid) {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns mysql_dataset of species info*/
+            return $this->dbres->query("SELECT SSpeciesId, SCommonName,
+                          SNAmerica, SKy, SNonNative, SComments,
+                          SFlowerRelLeaves, SFruitType, SEdibleFruit
+                    FROM  Species WHERE SGenusId = {$this->dbres->escapeString($gid)}
                     ");
          
         }

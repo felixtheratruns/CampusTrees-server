@@ -48,7 +48,7 @@ else {
     <a href="list_genus.php">Genus List</a><br><br>
     Genus Name: <input type="text" name="genus" value="<?php echo $genus['genus']; ?>"><br />
     Nickname: <input type="text" name="nick" value="<?php echo $genus['nick']; ?>"><br />
-    Count: <?php echo $genus['count']; ?><br />
+    Count: <?php echo "<a href=\"list_tree.php?gid={$genus['gid']}\">{$genus['count']}</a>"; ?><br />
 
     <h2>Species:</h2>
     <?php

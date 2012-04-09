@@ -30,7 +30,7 @@ if (isset($_GET["pFacts"])) {
 
 if (isset($_GET["t"])) {
     $trees = json_decode($_GET["t"]);
-      if (isset($trees[0])) {
+    if (isset($trees[0])) {
         $i = 0;
         $treeList = array();
         while (isset($trees[$i])) {
@@ -46,7 +46,7 @@ if (isset($_GET["t"])) {
 
 if (isset($_GET["flowerMonth"])) {
     $months = json_decode($_GET["flowerMonth"]);
-      if (isset($months[0])) {
+    if (isset($months[0])) {
         $i = 0;
         $json = "[";
         while (isset($months[$i])) {
@@ -64,7 +64,7 @@ if (isset($_GET["flowerMonth"])) {
 
 if (isset($_GET["fruitMonth"])) {
     $months = json_decode($_GET["fruitMonth"]);
-      if (isset($months[0])) {
+    if (isset($months[0])) {
         $i = 0;
         $json = "[";
         while (isset($months[$i])) {

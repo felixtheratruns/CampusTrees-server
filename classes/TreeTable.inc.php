@@ -2,6 +2,7 @@
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
 require_once(ROOT_DIR . "classes/tree.inc.php");
+require_once(ROOT_DIR . "classes/SpeciesTable.inc.php");
 
 class TreeTable { 
 	private $dbres;		//Database resource
@@ -45,6 +46,46 @@ class TreeTable {
                                   (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);
                     $selectedTrees[$i] = $t->getProperties();
                     $i++;
+                }
+            }
+            return $selectedTrees;
+        }
+
+        public function filterGenus($forest, $gid) {
+            $sTable = new SpeciesTable();
+            $species = $sTable->GetSpeciesByGenus($gid);
+            $i = 0;
+            $sid = array();
+            foreach ($species as $s) {
+                $sid[$i] = $s['sid'];
+                $i++;
+            }
+            return $this->filter($forest, 'sid', $sid);
+        }
+
+        public function filterSpecies($forest, $sid) {
+            return $this->filter($forest, 'sid', $sid);
+        }
+
+        private function filter($forest, $field, $value) {
+            $selectedTrees = array();
+            $i = 0;
+            if (isset($value[0])) {
+                foreach ($value as $v) {
+                    foreach ($forest as $tree) {
+                        if ($tree["{$field}"] == $v) {
+                            $selectedTrees[$i] = $tree;
+                            $i++;
+                        }
+                    }
+                }
+            }
+            else {
+                foreach ($forest as $tree) {
+                    if ($tree["{$field}"] == $value) {
+                        $selectedTrees[$i] = $tree;
+                        $i++;
+                    }
                 }
             }
             return $selectedTrees;
