@@ -92,14 +92,15 @@ class TreeTable {
         }
 
         public function getStats() {
-            $res["Tallest"] = $this->getTallest();
+            $res = array();
+            array_push($res, $this->getTallest());
             $forest = $this->getAll();
-            $res["Most CO2 Sequestered in Lifetime"] = $this->getMCLife($forest);
-            $res["Most CO2 Sequestered per Year"] = $this->getMCYear($forest);
-            $res["Heaviest"] = $this->getHeaviest($forest);
-            $res["Oldest"] = $this->getOldest($forest);
-            $res["Largest DBH"] = $this->getLDBH($forest);
-            $res["Largest Crown Area"] = $this->getLCrown($forest);
+            array_push($res, $this->getMCLife($forest));
+            array_push($res, $this->getMCYear($forest));
+            array_push($res, $this->getHeaviest($forest));
+            array_push($res, $this->getOldest($forest));
+            array_push($res, $this->getLDBH($forest));
+            array_push($res, $this->getLCrown($forest));
             return $res;
         }
 
@@ -111,7 +112,9 @@ class TreeTable {
             $res = mysql_fetch_assoc($this->QueryTallest());
             $tallestId = (int)$res['TTreeId'];
             $tallestTree = new tree($tallestId);
-            return $tallestTree->getProperties();
+            $prop = $tallestTree->getProperties();
+            $prop['title'] = 'Tallest';
+            return $prop;
         }
 
         public function getLCrown ($forest) { //Currently just returning filler data
@@ -121,8 +124,11 @@ class TreeTable {
                     $max = $tree;
                 }
             }
-            $t = new tree(1275);
-            return $t->getProperties();
+            $t = new tree(1275);//These three lines to be replaced by following two
+            $prop = $t->getProperties();
+            $prop['title'] = 'Largest Crown Area';
+            return $prop;
+//          $max['title'] = 'Largest Crown Area';
 //          return $max;
         }
 
@@ -133,19 +139,19 @@ class TreeTable {
                     $max = $tree;
                 }
             }
+            $max['title'] = 'Largest DBH';
             return $max;
         }
 
-        public function getOldest ($forest) { //Currently just returning filler data
+        public function getOldest ($forest) {
             $max = array('age' => 0);
             foreach ($forest as $tree) {
                 if ($tree['age'] > $max['age']) {
                     $max = $tree;
                 }
             }
-            $t = new tree(1275);
-            return $t->getProperties();
-//          return $max;
+            $max['title'] = 'Oldest';
+            return $max;
         }
 
         public function getHeaviest ($forest) { 
@@ -155,6 +161,7 @@ class TreeTable {
                     $max = $tree;
                 }
             }
+            $max['title'] = 'Heaviest';
             return $max;
         }
 
@@ -165,19 +172,19 @@ class TreeTable {
                     $max = $tree;
                 }
             }
+            $max['title'] = 'Most CO2 Sequestered in Lifetime';
             return $max;
         }
 
-        public function getMCyear ($forest) {//Currently just returning filler data
+        public function getMCyear ($forest) {
             $max = array('co2pyear' => 0);
             foreach ($forest as $tree) {
                 if ($tree['co2pyear'] > $max['co2pyear']) {
                     $max = $tree;
                 }
             }
-            $t = new tree(1275);
-            return $t->getProperties();
-//          return $max;
+            $max['title'] = 'Most CO2 Sequestered per Year';
+            return $max;
         }
 
         private function QueryTallest() {
