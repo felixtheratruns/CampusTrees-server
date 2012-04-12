@@ -18,7 +18,7 @@ class GenusTable {
             while ($row = mysql_fetch_assoc($res)) {
                 $g = new Genus((int)$row['GGenusId'], $row['GGenus'],
                               $row['GNickname'], $row['GRecCreatedDate'],
-                              (int)$row['GRecCreatorId']);
+                              (int)$row['GRecCreatorId'], (float)$row['GAvgGrowthFactor']);
                 $selectedGenus[$i] = $g->getProperties();
                 $i++;
             }
@@ -27,7 +27,8 @@ class GenusTable {
     }
 
     private function QueryAll() {
-        return $this->dbres->query("SELECT GGenusId, GGenus, GNickname, GRecCreatedDate, GRecCreatorId
+        return $this->dbres->query("SELECT GGenusId, GGenus, GNickname,
+                                    GRecCreatedDate, GRecCreatorId, GAvgGrowthFactor
                                     FROM Genus");
     }
 }

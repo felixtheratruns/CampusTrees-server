@@ -13,6 +13,7 @@ if (isset($_POST['gid'])) { //IF Handling an update:
     $genus = $g->getProperties();
     $genusn = $_POST['genus'];
     $nick = $_POST['nick'];
+    $agf = $_POST['agf'];
 
     $fields['gid'] = $genus['gid'];
     $fields['uid'] = $user;
@@ -23,6 +24,10 @@ if (isset($_POST['gid'])) { //IF Handling an update:
     
     if ($genus['nick'] != $nick) {
         $fields['nick'] = $nick;
+    }
+    
+    if ($genus['agf'] != $agf) {
+        $fields['agf'] = $agf;
     }
     
     $g->update($fields);
@@ -48,6 +53,7 @@ else {
     <a href="list_genus.php">Genus List</a><br><br>
     Genus Name: <input type="text" name="genus" value="<?php echo $genus['genus']; ?>"><br />
     Nickname: <input type="text" name="nick" value="<?php echo $genus['nick']; ?>"><br />
+    Average Growth Factor: <input type="text" name="agf" value="<?php echo $genus['agf']; ?>"><br />
     Count: <?php echo "<a href=\"list_tree.php?gid={$genus['gid']}\">{$genus['count']}</a>"; ?><br />
 
     <h2>Species:</h2>

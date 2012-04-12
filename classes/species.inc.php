@@ -14,7 +14,10 @@ class Species {
         protected $flowrelleaf; //SFlowerRelLeaves
         protected $fruittype;   //SFruitType
         protected $edible;      //SEdibleFruit
-        protected $count;      //SEdibleFruit
+        protected $gf;      //sGrowthFactor
+
+//Calculated Fields
+        protected $count;      //Count of trees of this species
 
 //Admin Properties
 	protected $recid;       //SRecId
@@ -38,6 +41,7 @@ class Species {
                 $this->flowrelleaf = func_get_arg(6);
                 $this->fruittype = func_get_arg(7);
                 $this->edible = func_get_arg(8);
+                $this->gf = func_get_arg(9);
             }    
             $this->genCalFields();
         }
@@ -74,7 +78,7 @@ class Species {
             $res = mysql_fetch_assoc($dbres->query("SELECT SSpeciesId,
                 SCommonName, SNAmerica,	SKy, SNonNative, SComments,
                 SFlowerRelLeaves, SFruitType, SEdibleFruit, SRecId,
-                SGenusId, SSpecies, SRecCreatedDate, SRecCreatorId
+                SGenusId, SSpecies, SRecCreatedDate, SRecCreatorId, SGrowthFactor
                 FROM Species where SSpeciesId = " . $dbres->escapeString($sid) . ""));
             //Now set all of the other attributes
             $this->sid = (int)$res['SSpeciesId'];
@@ -91,6 +95,7 @@ class Species {
             $this->species = $res['SSpecies'];
             $this->createdate = $res['SRecCreatedDate'];
             $this->creatorid = (int)$res['SRecCreatorId'];
+            $this->gf = (float)$res['SGrowthFactor'];
             return True;
         }     
 
@@ -126,6 +131,11 @@ class Species {
                 $any = True;
             }
 
+            if (isset($f['gf'])) {
+                $query .= "SGrowthFactor = '{$dbres->escapeString($f['gf'])}', ";
+                $any = True;
+            }
+
             if (isset($f['gid'])) {
                 $query .= "SGenusId = '{$dbres->escapeString($f['gid'])}', ";
                 $any = True;
@@ -155,6 +165,14 @@ class Species {
                 $dbres->query($query);
                 $euTable->logUpdate(2, $this->sid, $f['uid'], $remov);
             }
+        }
+
+        public function getgid() {
+            return $this->gid;
+        }
+
+        public function getgf() {
+            return $this->gf;
         }
 
         private function repNull($maybeNull) {

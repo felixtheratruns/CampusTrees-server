@@ -10,12 +10,13 @@ class Genus {
 	protected $gid;		//Genus ID
 	protected $genus;	//Genus name
 	protected $nick;	//Genus nickname
+	protected $agf;	//Average Growth Factor
         protected $count;
 	private $createdate;
 	private $creatorid;
 
 	//Class constructor
-	public function Genus($genID, $gname=null, $gnick=null, $gcreate=null, $gcreator=null) {
+	public function Genus($genID, $gname=null, $gnick=null, $gcreate=null, $gcreator=null, $gagf=null) {
 		//Precondition checking
 		if (!isset($genID) || empty($genID) || $genID <=0)
 			throw new Exception("A proper Genus ID was not provided");
@@ -41,6 +42,7 @@ class Genus {
 		    $this->nick = $data['GNickname'];
 		    $this->createdate = $data['GRecCreatedDate'];
 		    $this->creatorid = $data['GRecCreatorId'];
+		    $this->agf = $data['GAvgGrowthFactor'];
                     $this->genCalFields();
                 }
                 else {
@@ -49,11 +51,16 @@ class Genus {
 		    $this->nick = $gnick;
 		    $this->createdate = $gcreate;
 		    $this->creatorid = $gcreator;
+		    $this->agf = $gagf;
                     $this->genCalFields();
                 }
 	}
 
 	//Getters and Setters
+	public function getagf() {
+		return $this->agf;
+	}
+
 	public function getID() {
 		return $this->gid;
 	}
@@ -157,6 +164,11 @@ class Genus {
 
             if (isset($f['nick'])) {
                 $query .= "GNickname = '{$dbres->escapeString($f['nick'])}', ";
+                $any = True;
+            }
+
+            if (isset($f['agf'])) {
+                $query .= "GAvgGrowthFactor = '{$dbres->escapeString($f['agf'])}', ";
                 $any = True;
             }
 

@@ -7,6 +7,7 @@ ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/species.inc.php');
 require_once(ROOT_DIR . 'classes/GenusTable.inc.php');
+require_once(ROOT_DIR . 'classes/genus.inc.php');
 require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 ?>
@@ -18,6 +19,7 @@ if (isset($_POST['sid'])) { //IF Handling an update:
     $species = $s->getProperties(True);
     $commonname = $_POST['commonname'];
     $speciesn = $_POST['species'];
+    $gf = $_POST['gf'];
     $gid = $_POST['gid'];
     $comments = $_POST['comments'];
 
@@ -72,6 +74,10 @@ if (isset($_POST['sid'])) { //IF Handling an update:
         $fields['species'] = $speciesn;
     }
     
+    if ($species['gf'] != $gf) {
+        $fields['gf'] = $gf;
+    }
+    
     if ($species['gid'] != $gid) {
         $fields['gid'] = $gid;
     }
@@ -115,6 +121,12 @@ else {
     <a href="list_species.php">Species List</a><br><br>
     Common Name: <input type="text" name="commonname" value="<?php echo $species['commonname']; ?>"><br />
     Species Name: <input type="text" name="species" value="<?php echo $species['species']; ?>"><br />
+    Growth Factor: <input type="text" name="gf" value="<?php echo $species['gf']; ?>">
+    <?php 
+        $g = new genus($species['gid']);
+        echo " Genus Avg: {$g->getagf()}";
+    ?>
+    <br />
     Genus: <select name="gid">
     <?php
     foreach ($genus as $g) {

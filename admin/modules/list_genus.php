@@ -12,13 +12,14 @@ $html = "<html>";
     $i = 0;
     $gList = $gTable->getAll();
     $html .= "<table border=\"1\">";
-    $html .= "<tr><th>GenusId</th><th>Genus</th><th>Nickname</th><th>Count</th></tr>";
+    $html .= "<tr><th>GenusId</th><th>Genus</th><th>Nickname</th><th>Count</th><th>Average Growth Factor</th></tr>";
     foreach ($gList as $row) {
         $html .= "<tr><td><a href=\"" . HOME;
         $html .= "admin/modules/edit_genus.php?gid={$row['gid']}\">{$row['gid']}</a></td>";
         $html .= "<td>{$row['genus']}</td>";
         $html .= "<td>{$row['nick']}</td>";
         $html .= "<td>{$row['count']}</td>";
+        $html .= "<td>{$row['agf']}</td>";
         $html .= "</tr>";
     }
     $html .= "</table>";

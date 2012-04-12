@@ -41,7 +41,8 @@ class SpeciesTable {
                       $row['SCommonName'], (bool)$row['SNAmerica'],
                       (bool)$row['SKy'], (bool)$row['SNonNative'],
                       $row['SComments'], (int)$row['SFlowerRelLeaves'],
-                      $row['SFruitType'], (bool)$row['SEdibleFruit']);
+                      $row['SFruitType'], (bool)$row['SEdibleFruit'],
+                      $row['SGrowthFactor']);
                     $selectedSpecies[$i] = $s->getProperties();
                     $i++;
                 }
@@ -54,7 +55,7 @@ class SpeciesTable {
              *Postcondition: Returns mysql_dataset of species info*/
             return $this->dbres->query("SELECT SSpeciesId, SCommonName,
                           SNAmerica, SKy, SNonNative, SComments,
-                          SFlowerRelLeaves, SFruitType, SEdibleFruit
+                          SFlowerRelLeaves, SFruitType, SEdibleFruit, SGrowthFactor
                     FROM  Species
                     ");
          
@@ -64,7 +65,7 @@ class SpeciesTable {
              *Postcondition: Returns mysql_dataset of species info*/
             return $this->dbres->query("SELECT SSpeciesId, SCommonName,
                           SNAmerica, SKy, SNonNative, SComments,
-                          SFlowerRelLeaves, SFruitType, SEdibleFruit
+                          SFlowerRelLeaves, SFruitType, SEdibleFruit, SGrowthFactor
                     FROM  Species WHERE SGenusId = {$this->dbres->escapeString($gid)}
                     ");
          

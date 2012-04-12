@@ -2,6 +2,8 @@
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
 require_once(ROOT_DIR . "classes/EntityUpdateTable.inc.php");
+require_once(ROOT_DIR . "classes/species.inc.php");
+require_once(ROOT_DIR . "classes/genus.inc.php");
 
 class Tree { 
 //General Properties
@@ -31,6 +33,9 @@ class Tree {
         protected $co2pyear;     
 /** Calculated Area of Crown */
         protected $crownarea;     
+/** bool indicator averaged growth factor used */
+        protected $avged;     
+
 
 //Admin properties
         protected $recid;        //TRecId
@@ -205,6 +210,7 @@ class Tree {
             }
         }
         private function genCalFields() {
+            $this->avged = false;
             $this->vol = $this->calVolume();
             $this->greenwt = $this->calGWeight();
             $this->drywt = $this->calDWeight();
@@ -249,12 +255,24 @@ class Tree {
             return $this->carbonwt*3.6663;
         }
 
-        Private function calAge() {/** @return Tree Age. *///TODO:cal Age once have coeff
-            return 0;
+        Private function calAge() {/** @return Tree Age. */
+            $s = new Species($this->sid);
+            $gf = $s->getgf();
+            if ($gf == 0) {
+                $g = new Genus($s->getgid());
+                $gf = $g->getagf();
+                $this->avged = true;
+            }
+            $age = $this->dbh * $gf;
+            return $age;
         }
 
-        Private function calCO2PerYear() {/** @return CO2 Seqeustered per year. *///TODO:cal seq per year once have Age
-            return 0;//Divide $this->co2seqwt/$this->age;
+        Private function calCO2PerYear() {/** @return CO2 Seqeustered per year. */
+            if (!isset($this->age)) {
+                $this->age = $this->calAge();
+            }
+            if ($this->age > 0) {return $this->co2seqwt/$this->age;}
+            else {return 0;}
         }
 
         Private function calCrownArea() {/** @return Area of Crown. *///TODO:cal Area of Crown once get info on Crown Ids

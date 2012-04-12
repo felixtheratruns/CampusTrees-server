@@ -128,13 +128,19 @@ else {//Tree selected - Display Form:
     <br />
 
     <h2>Calculated Data:</h2>
-    Age:<?php echo " {$tree['age']}"; ?><br />
+    Age:<?php
+        echo " {$tree['age']}";
+        if ($tree['avged']) {echo "*";}
+    ?><br />
     Volume:<?php echo " {$tree['vol']}"; ?><br />
     Green Weight:<?php echo " {$tree['greenwt']}"; ?><br />
     Dry Weight:<?php echo " {$tree['drywt']}"; ?><br />
     Weight of Carbon:<?php echo " {$tree['carbonwt']}"; ?><br />
     Weight of CO2(Lifetime):<?php echo " {$tree['co2seqwt']}"; ?><br />
-    Weight of CO2 (per Year):<?php echo " {$tree['co2pyear']}"; ?><br />
+    Weight of CO2 (per Year):<?php
+        echo " {$tree['co2pyear']}";
+        if ($tree['avged']) {echo "*";}
+    ?><br />
     Area of Crown:<?php echo " {$tree['crownarea']}"; ?><br />
     <br>
     
