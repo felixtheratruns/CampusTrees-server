@@ -3,42 +3,29 @@
 require_once(GCTOOLS_DIR . "database.inc.php");
 require_once(ROOT_DIR . "classes/tree.inc.php");
 require_once(ROOT_DIR . "classes/SpeciesTable.inc.php");
+require_once(ROOT_DIR . "classes/CacheMan.inc.php");
 
 class TreeTable { 
 	private $dbres;		//Database resource
+        private $cache;
 
 
 
         //Contructor
         public function TreeTable() {
             $this->dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
-
+            $this->cache = new CacheManager();
         }
 
         public function ByZone($zId) {
             /*Precondition: $zId is a valid zone Id integer, Database connected and populated
              *Postcondition: Returns JSON optimized array of Tree info of trees in the zone specified
             */
-            $res = $this->QueryByZone($zId);
-//          echo $this->dbres->getLastError();
-            $i = 0;
-            while ($row = mysql_fetch_assoc($res)) {
-                $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
-                              (float)$row['TLat'], (float)$row['TLong'],
-                              (float)$row['TDBH'], (float)$row['THeight'],
-                              (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);
-                $selectedTrees[$i] = $t->getProperties();
-                $i++;
-            }
-            return $selectedTrees;
-        }
-
-        public function getAll($admin=false) {
-            $res = $this->QueryAll();
-//          echo $this->dbres->getLastError();
-            $i = 0;
-            if ($admin) {$selectedTrees = 0;}//Need to write this
-            else {
+            $file = ROOT_DIR . "cache/z{$zId}Tree.data";
+            if (!is_file($file)) {
+                $res = $this->QueryByZone($zId);
+    //          echo $this->dbres->getLastError();
+                $i = 0;
                 while ($row = mysql_fetch_assoc($res)) {
                     $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
                                   (float)$row['TLat'], (float)$row['TLong'],
@@ -47,8 +34,33 @@ class TreeTable {
                     $selectedTrees[$i] = $t->getProperties();
                     $i++;
                 }
+                $this->cache->createDataCache($file, $selectedTrees);
             }
-            return $selectedTrees;
+            $zTrees = $this->cache->readDataCache($file);
+            return $zTrees;
+        }
+
+        public function getAll($admin=false) {
+            $file = ROOT_DIR . "cache/allTree.data";
+            if (!is_file($file)) {
+                $res = $this->QueryAll();
+    //          echo $this->dbres->getLastError();
+                $i = 0;
+                if ($admin) {$selectedTrees = 0;}//Need to write this
+                else {
+                    while ($row = mysql_fetch_assoc($res)) {
+                        $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
+                                      (float)$row['TLat'], (float)$row['TLong'],
+                                      (float)$row['TDBH'], (float)$row['THeight'],
+                                      (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);
+                        $selectedTrees[$i] = $t->getProperties();
+                        $i++;
+                    }
+                }
+                $this->cache->createDataCache($file, $selectedTrees);
+            }
+            $allTrees = $this->cache->readDataCache($file);
+            return $allTrees;
         }
 
         public function filterGenus($forest, $gid) {
