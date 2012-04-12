@@ -4,6 +4,7 @@
 //Requirements
 require_once(GCTOOLS_DIR . "database.inc.php");
 require_once(ROOT_DIR . 'classes/EntityUpdateTable.inc.php');
+require_once(ROOT_DIR . "classes/CacheMan.inc.php");
 
 class Genus {
 	
@@ -152,6 +153,7 @@ class Genus {
         
         public function update($f) {
             $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $cache = new CacheManager();
             $euTable = new EntityUpdateTable();
             $any = false;
             $query = "UPDATE Genus SET ";
@@ -179,6 +181,7 @@ class Genus {
  //             echo "<br>";
                 $dbres->query($query);
                 $euTable->logUpdate(3, $this->gid, $f['uid'], $remov);
+                $cache->clear(1);
             }
         }
 

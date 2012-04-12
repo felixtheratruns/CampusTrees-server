@@ -4,6 +4,7 @@ require_once(GCTOOLS_DIR . "database.inc.php");
 require_once(ROOT_DIR . "classes/EntityUpdateTable.inc.php");
 require_once(ROOT_DIR . "classes/species.inc.php");
 require_once(ROOT_DIR . "classes/genus.inc.php");
+require_once(ROOT_DIR . "classes/CacheMan.inc.php");
 
 class Tree { 
 //General Properties
@@ -124,6 +125,7 @@ class Tree {
 
         public function update($f) {
             $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
+            $cache = new CacheManager();
             $euTable = new EntityUpdateTable();
             $any = false;
             $query = "UPDATE Tree SET ";
@@ -207,6 +209,7 @@ class Tree {
  //             echo "<br>";
                 $dbres->query($query);
                 $euTable->logUpdate(1, $this->id, $f['uid'], $remov);
+                $cache->clear(1);
             }
         }
         private function genCalFields() {
