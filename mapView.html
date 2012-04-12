@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UWRL Tree Map View</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <style type="text/css">
+      html, body, #map_canvas {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+    </style>
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYA5AktZOnr9k_YVfcvQOcARH7IBSwDs&sensor=false"></script>
+    <script type="text/javascript" src="js/TreeOverlay.js"></script>
+    <script type="text/javascript">
+      var map;
+      function initialize() {
+        var myOptions = {
+          zoom: 18,
+          center: new google.maps.LatLng(38.2159018, -85.7581278),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'),
+            myOptions);
+
+	for (i in campusTrees) {
+		treeLocation = new google.maps.LatLng(campusTrees[i][1], campusTrees[i][2]);
+		marker = new google.maps.Marker({
+			position: treeLocation,
+			map: map
+		});
+	}
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map_canvas"></div>
+  </body>
+</html>
+
