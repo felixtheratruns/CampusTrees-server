@@ -6,10 +6,12 @@ require_once(ROOT_DIR . 'classes/AppRequestHandler.inc.php');
 require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
+require_once(ROOT_DIR . 'classes/NewsTable.inc.php');
 $handler = new ARHandler();
 $fmTable = new FlowerMonthsTable();
 $smTable = new SeedingMonthsTable();
 $tTable = new TreeTable();
+$nTable = new NewsTable();
 
 if (isset($_GET["zoneRequest"])) {
     echo $handler->JSON_RequestZoneList();
@@ -28,6 +30,9 @@ if (isset($_GET["pFacts"])) {
     echo $tTable->JSON_getStats();
 }
 
+if (isset($_GET["news"])) {
+    echo $nTable->JSON_getNews();
+}
 if (isset($_GET["t"])) {
     $trees = json_decode($_GET["t"]);
     if (isset($trees[0])) {
