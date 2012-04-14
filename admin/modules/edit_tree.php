@@ -171,7 +171,7 @@ else {//Tree selected - Display Form:
     </form>
     <br>
     <?php
-    $hist = $euTable->getEditHistory(1, $tree['id']);
+    $hist = $euTable->getEditHistory(1, $tree['recid']);
     foreach ($hist as $row) {
         echo "Edited: {$row['date']} by 
               <a href=\"view_user.php?uid={$row['uid']}\">{$row['uname']}</a>";

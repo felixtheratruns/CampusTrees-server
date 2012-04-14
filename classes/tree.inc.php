@@ -208,7 +208,7 @@ class Tree {
 //              echo $query;
  //             echo "<br>";
                 $dbres->query($query);
-                $euTable->logUpdate(1, $this->id, $f['uid'], $remov);
+                $euTable->logUpdate(1, $this->recid, $f['uid'], $remov);
                 $cache->clear(1);
             }
         }

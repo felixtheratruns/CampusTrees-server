@@ -6,7 +6,8 @@ require_once(ROOT_DIR . 'classes/AppRequestHandler.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
 $handler = new ARHandler();
 $tTable = new TreeTable();
-$html = "<html>";
+$html = "<html>
+<a href=\"add_tree.php\">Add a Tree</a></br>";
 
 
 if (isset($_GET["zone"])) {

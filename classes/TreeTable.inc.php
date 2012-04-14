@@ -103,6 +103,112 @@ class TreeTable {
             return $selectedTrees;
         }
 
+        public function getNextId() {
+            $query = "SELECT TTreeId FROM Tree ORDER BY TTreeId DESC LIMIT 1";
+            $res = $this->dbres->query($query);
+            $last = (int) mysql_result($res, 0);
+            return $last + 1;
+        }
+
+        public function addTree($f) {
+            $cache = new CacheManager();
+            $miss = false;
+
+            echo "<br>{$f['lat']}<br>";
+
+            if (!isset($f['lat'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['long'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['sid'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['height'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['comments'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['dbh'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['cw1'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['cw2'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['area'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['quad'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['dcrn'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['dtree'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['crwnid'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['id'])) {
+                $miss = True;
+            }
+
+            if (!isset($f['uid'])) {
+                $miss = True;
+            }
+
+            if (!$miss) {
+            $query = "INSERT INTO Tree (TTreeId, TLat, TLong, TSpeciesId, THeight,
+                      TRemoved, TComments, TDBH, TCrwnWidth1, TCrwnWidth2,
+                      TAreaId, TQuadId, TDistCrn, TDistTree, TCrwnId, TRecCreatorId)
+                      VALUES (";
+                $query .= "'{$this->dbres->escapeString($f['id'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['lat'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['long'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['sid'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['height'])}', ";
+                $query .= "'0', ";
+                $query .= "\"{$this->dbres->escapeString($f['comments'])}\", ";
+                $query .= "'{$this->dbres->escapeString($f['dbh'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['cw1'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['cw2'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['area'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['quad'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['dcrn'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['dtree'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['crwnid'])}', ";
+                $query .= "'{$this->dbres->escapeString($f['uid'])}', ";
+                $query = substr($query, 0, -2);
+                $query .= ")";
+//              echo $query;
+//              echo "<br>";
+                $this->dbres->query($query);
+//              echo $this->dbres->getLastError();
+                $cache->clear(1);
+                return true;
+            }
+            return false;
+        }
+
         public function getStats() {
             $res = array();
             array_push($res, $this->getTallest());

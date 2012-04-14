@@ -70,7 +70,8 @@ class Species {
         public function calCount() {
             $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
             $res = $dbres->query("SELECT COUNT(*) FROM Tree
-                                  WHERE TSpeciesId = {$dbres->escapeString($this->sid)}");
+                                  WHERE TSpeciesId = {$dbres->escapeString($this->sid)}
+                                  AND TRemoved = 0");
             return mysql_result($res, 0);
         }
 
@@ -165,7 +166,7 @@ class Species {
 //              echo $query;
 //              echo "<br>";
                 $dbres->query($query);
-                $euTable->logUpdate(2, $this->sid, $f['uid'], $remov);
+                $euTable->logUpdate(2, $this->recid, $f['uid'], $remov);
                 $cache->clear(1);
             }
         }

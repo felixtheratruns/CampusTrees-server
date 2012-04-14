@@ -16,6 +16,8 @@ class Genus {
 	private $createdate;
 	private $creatorid;
 
+        private $recid;
+
 	//Class constructor
 	public function Genus($genID, $gname=null, $gnick=null, $gcreate=null, $gcreator=null, $gagf=null) {
 		//Precondition checking
@@ -44,6 +46,7 @@ class Genus {
 		    $this->createdate = $data['GRecCreatedDate'];
 		    $this->creatorid = $data['GRecCreatorId'];
 		    $this->agf = $data['GAvgGrowthFactor'];
+		    $this->recid = $data['GRecId'];
                     $this->genCalFields();
                 }
                 else {
@@ -119,7 +122,8 @@ class Genus {
             $dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
             $res = $dbres->query("SELECT COUNT(*) FROM Tree inner join Species ON (TSpeciesId = SSpeciesId)
                                   inner join Genus on (SGenusId = GGenusID)
-                                  WHERE GGenusId = {$dbres->escapeString($this->gid)}");
+                                  WHERE GGenusId = {$dbres->escapeString($this->gid)}
+                                  AND TRemoved = 0");
             return mysql_result($res, 0);
         }
 
@@ -180,7 +184,7 @@ class Genus {
 //              echo $query;
  //             echo "<br>";
                 $dbres->query($query);
-                $euTable->logUpdate(3, $this->gid, $f['uid'], $remov);
+                $euTable->logUpdate(3, $this->recid, $f['uid'], $remov);
                 $cache->clear(1);
             }
         }

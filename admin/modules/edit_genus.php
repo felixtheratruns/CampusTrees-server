@@ -65,7 +65,7 @@ else {
     <input type="submit" value="Submit">
     </form>
     <?php
-    $hist = $euTable->getEditHistory(3, $genus['gid']);
+    $hist = $euTable->getEditHistory(3, $genus['recid']);
     foreach ($hist as $row) {
         echo "Edited: {$row['date']} by 
               <a href=\"view_user.php?uid={$row['uid']}\">{$row['uname']}</a>";
