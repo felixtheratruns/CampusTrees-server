@@ -242,7 +242,7 @@ class TreeTable {
                     $max = $tree;
                 }
             }
-            $t = new tree(1275);//These three lines to be replaced by following two
+            $t = new tree(1220);//These three lines to be replaced by following two
             $prop = $t->getProperties();
             $prop['title'] = 'Largest Crown Area';
             return $prop;
