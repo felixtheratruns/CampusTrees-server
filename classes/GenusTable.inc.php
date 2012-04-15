@@ -31,6 +31,30 @@ class GenusTable {
                                     GRecCreatedDate, GRecCreatorId, GAvgGrowthFactor
                                     FROM Genus");
     }
-}
 
+        public function getNextId() {
+            $query = "SELECT GGenusId FROM Genus ORDER BY GGenusId DESC LIMIT 1";
+            $res = $this->dbres->query($query);
+            $last = (int) mysql_result($res, 0);
+            return $last + 1;
+        }
+
+        public function addGenus($gid, $genus, $nick, $agf, $uid) {
+            $query = "INSERT INTO Genus (GGenusId, GGenus,
+                        Gnickname, GAvgGrowthFactor, GRecCreatorId)
+                      VALUES (
+                '{$this->dbres->escapeString($gid)}',
+                '{$this->dbres->escapeString($genus)}',
+                '{$this->dbres->escapeString($nick)}',
+                '{$this->dbres->escapeString($agf)}',
+                '{$this->dbres->escapeString($uid)}',";
+                $query = substr($query, 0, -1);
+                $query .= ")";
+//              echo "<br>{$query}<br>";
+                $this->dbres->query($query);
+//              echo $this->dbres->getLastError();
+                return true;
+        }
+
+}
 ?>

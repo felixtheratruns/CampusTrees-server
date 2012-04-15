@@ -6,7 +6,8 @@ require_once(ROOT_DIR . 'classes/AppRequestHandler.inc.php');
 require_once(ROOT_DIR . 'classes/GenusTable.inc.php');
 $handler = new ARHandler();
 $gTable = new GenusTable();
-$html = "<html>";
+$html = "<html>
+<a href=\"add_genus.php\">Add a Genus</a></br>";
 
 
     $i = 0;

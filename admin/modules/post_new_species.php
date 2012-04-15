@@ -37,5 +37,5 @@ if ($sTable->addSpecies($sid, $commonname, $species, $gf, $gid, $american, $ky,
                         $fruittype, $edible, $flowrelleaf, $comments, $uid)) {
     echo "<HEAD><meta http-equiv=\"REFRESH\" content=\"0;url=" . HOME ."admin/modules/edit_species.php?sid={$sid}\"></HEAD>";
 }
-else {echo "Error adding tree!";}
+else {echo "Error adding species!";}
 ?>

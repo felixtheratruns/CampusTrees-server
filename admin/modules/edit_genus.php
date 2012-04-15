@@ -56,12 +56,15 @@ else {
     Average Growth Factor: <input type="text" name="agf" value="<?php echo $genus['agf']; ?>"><br />
     Count: <?php echo "<a href=\"list_tree.php?gid={$genus['gid']}\">{$genus['count']}</a>"; ?><br />
 
-    <h2>Species:</h2>
     <?php
-    foreach ($species as $s) {
-        echo "<a href=\"edit_species.php?sid={$s['sid']}\">{$s['commonname']}</a><br />";
+    if (isset($species[0])) {
+        echo "<h2>Species:</h2>";
+        foreach ($species as $s) {
+            echo "<a href=\"edit_species.php?sid={$s['sid']}\">{$s['commonname']}</a><br />";
+        }
     }
     ?>
+    <br>
     <input type="submit" value="Submit">
     </form>
     <?php
