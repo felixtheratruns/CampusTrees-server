@@ -70,5 +70,40 @@ class SpeciesTable {
                     ");
          
         }
+
+        public function getNextId() {
+            $query = "SELECT SSpeciesId FROM Species ORDER BY SSpeciesId DESC LIMIT 1";
+            $res = $this->dbres->query($query);
+            $last = (int) mysql_result($res, 0);
+            return $last + 1;
+        }
+
+        public function addSpecies($sid, $commonname, $species, $gf, $gid, $american, $ky,
+                        $fruittype, $edible, $flowrelleaf, $comments, $uid) {
+
+            $query = "INSERT INTO Species (SSpeciesId, SCommonName,
+                        SSpecies, SGrowthFactor, SGenusId, SNAmerica, SKy,
+                        SFruitType, SEdibleFruit, SFlowerRelLeaves, SComments,
+                        SRecCreatorId)
+                      VALUES (
+                '{$this->dbres->escapeString($sid)}',
+                '{$this->dbres->escapeString($commonname)}',
+                '{$this->dbres->escapeString($species)}',
+                '{$this->dbres->escapeString($gf)}',
+                '{$this->dbres->escapeString($gid)}',
+                '{$this->dbres->escapeString($american)}',
+                '{$this->dbres->escapeString($ky)}',
+                '{$this->dbres->escapeString($fruittype)}',
+                '{$this->dbres->escapeString($edible)}',
+                '{$this->dbres->escapeString($flowrelleaf)}',
+                \"{$this->dbres->escapeString($comments)}\",
+                '{$this->dbres->escapeString($uid)}',";
+                $query = substr($query, 0, -1);
+                $query .= ")";
+//              echo "<br>{$query}<br>";
+                $this->dbres->query($query);
+//              echo $this->dbres->getLastError();
+                return true;
+        }
 }
 ?>

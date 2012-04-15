@@ -6,7 +6,8 @@ require_once(ROOT_DIR . 'classes/AppRequestHandler.inc.php');
 require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
 $handler = new ARHandler();
 $sTable = new SpeciesTable();
-$html = "<html>";
+$html = "<html>
+<a href=\"add_species.php\">Add a Species</a></br>";
 
 
     $i = 0;
