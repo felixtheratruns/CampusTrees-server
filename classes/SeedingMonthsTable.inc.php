@@ -68,7 +68,20 @@ class SeedingMonthsTable {
   
     private function QueryBySpecies($species) {
         return $this->dbres->query("SELECT SMSpeciesId, SMMonthId FROM SeedingMonths
-                                    WHERE SMSpeciesId = {$this->dbres->escapeString($species)}");
+                                    WHERE SMSpeciesId = {$this->dbres->escapeString($species)}
+                                    ORDER BY SMMonthId");
+    }
+
+    public function addMonth($species, $month) {
+        $this->dbres->query("INSERT INTO SeedingMonths (SMSpeciesId, SMMonthId)
+                            VALUES ('{$this->dbres->escapeString($species)}',
+                            '{$this->dbres->escapeString($month)}')");
+    }
+
+    public function removeMonth($species, $month) {
+        $this->dbres->query("DELETE FROM SeedingMonths
+                            WHERE SMSpeciesId = '{$this->dbres->escapeString($species)}'
+                            AND SMMonthId = '{$this->dbres->escapeString($month)}'");
     }
 
 }

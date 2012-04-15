@@ -13,6 +13,7 @@ require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 ?>
 
 <?php
+    $cal = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 if (isset($_POST['sid'])) { //IF Handling an update:
     $sid = $_POST['sid'];
     $s = new species($sid);
@@ -63,7 +64,7 @@ if (isset($_POST['sid'])) { //IF Handling an update:
     if ($species['edible'] != $edible) {
         if ($edible) { $fields['edible'] = 1;}
         else { $fields['edible'] = 0; }
-        echo "edible = {$fields['edible']}";
+//      echo "edible = {$fields['edible']}";
     }
     
     if ($species['commonname'] != $commonname) {
@@ -108,10 +109,46 @@ else {
     $gTable = new GenusTable();
     $genus = $gTable->getAll();
     $fmTable = new FlowerMonthsTable();
-    $fms = $fmTable->monthsBySpecies($species['sid']);
     $smTable = new SeedingMonthsTable();
-    $sms = $smTable->monthsBySpecies($species['sid']);
     $euTable = new EntityUpdateTable();
+
+    if (isset($_POST['month'])) {
+    
+        $type = null;
+        if (isset($_GET['fruit'])) {
+            $type = 'fruit';
+            $mTable = new SeedingMonthsTable();
+        }
+
+        if (isset($_GET['flower'])) {
+            $type = 'flower';
+            $mTable = new FlowerMonthsTable();
+        }
+
+        if (isset($type)) {
+            $ms = $mTable->monthsBySpecies($species['sid']);
+            $months = array();
+            foreach ($ms as $m) {
+                array_push($months, $m['mid']);
+//              echo "{$m['mid']}<br>";
+            }
+            foreach($cal as $month) {
+                $cmonth = array_search($month, $cal)+1;
+                if (isset($_POST[$month])) {
+                    if (!in_array(array_search($month, $cal)+1, $months)) {
+                        $mTable->addMonth($species['sid'], $cmonth);
+                    }
+                }
+                else {
+                    if (in_array(array_search($month, $cal)+1, $months)) {
+                        $mTable->removeMonth($species['sid'], $cmonth);
+                    }
+                }
+            }
+        }
+    }
+    $fms = $fmTable->monthsBySpecies($species['sid']);
+    $sms = $smTable->monthsBySpecies($species['sid']);
     ?>
     <h1>Edit Species</h1>
     <form name="edit_species" action="edit_species.php?sid=<?php echo $species['sid']; ?>" method="POST">
@@ -146,37 +183,37 @@ else {
     Tree native to KY: <input type="checkbox" name="ky" value="true" <?php if ($species['ky']) {echo "checked=\"checked\"";}?>><br />
     <br />
     
+    <h2>Fruit Information</h2>
+    Fruit Type: <input type="text" name="fruittype" value="<?php echo $species['fruittype']; ?>"><br />
+    Edible Fruit: <input type="checkbox" name="edible" value="true" <?php if ($species['edible']) {echo "checked=\"checked\"";}?>><br />
+
     <?php
-    if ($species['fruittype'] != 'none') {
+    if ($sms[0]['mid'] != $species['sid']) {
         ?>
-        <h2>Fruit Information</h2>
-        Fruit Type: <input type="text" name="fruittype" value="<?php echo $species['fruittype']; ?>"><br />
-        Edible Fruit: <input type="checkbox" name="edible" value="true" <?php if ($species['edible']) {echo "checked=\"checked\"";}?>><br />
-        Fruiting Months:<br />
+        <h4>Fruiting Months:</h4>
         <?php
         foreach ($sms as $sm) {
-            echo "{$sm['mid']}<br>";
+            echo "{$cal[$sm['mid']-1]}<br>";
         }
+    }
         ?>
         
-        <br />
     <?php
-    }
-    else {echo "<a href=\"ToDo\">Add Fruit</a><br />";}//TODO:This
-    if ($species['flowrelleaf'] != 0) {
-        ?>
-        <h2>Flower Information</h2>
-        Flower Relative to Leaves: <input type="text" name="flowrelleaf" value="<?php echo $species['flowrelleaf']; ?>"><br />
-        Flowering Months:<br />
+    echo "<br><a href=\"edit_month.php?sid={$species['sid']}&fruit\">Edit Fruiting Months</a>";
+
+    ?>
+    <h2>Flower Information</h2>
+    Flower Relative to Leaves: <input type="text" name="flowrelleaf" value="<?php echo $species['flowrelleaf']; ?>"><br />
+    <?php
+    if ($fms[0]['mid'] != $species['sid']) {
+    ?>
+        <h4>Flowering Months:</h4>
         <?php
         foreach ($fms as $fm) {
-            echo "{$fm['mid']}<br>";
+            echo "{$cal[$fm['mid']-1]}<br>";
         }
-        ?>
-        <br />
-        <?php
     }
-    else {echo "<a href=\"ToDo\">Add Flower</a><br />";}//TODO:This too!!
+    echo "<br><a href=\"edit_month.php?sid={$species['sid']}&flower\">Edit Flowering Months</a><br>";
     ?>
     <h2>Comments</h2>
     <textarea name="comments" rows="8" cols="120"><?php echo $species['comments'];?></textarea>

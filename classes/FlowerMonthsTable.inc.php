@@ -71,5 +71,17 @@ class FlowerMonthsTable {
                                     WHERE FMSpeciesId = {$this->dbres->escapeString($species)}");
     }
 
+    public function addMonth($species, $month) {
+        $this->dbres->query("INSERT INTO FlowerMonths (FMSpeciesId, FMMonthId)
+                            VALUES ('{$this->dbres->escapeString($species)}',
+                            '{$this->dbres->escapeString($month)}')");
+    }
+
+    public function removeMonth($species, $month) {
+        $this->dbres->query("DELETE FROM FlowerMonths
+                            WHERE FMSpeciesId = '{$this->dbres->escapeString($species)}'
+                            AND FMMonthId = '{$this->dbres->escapeString($month)}'");
+    }
+
 }
 ?>
