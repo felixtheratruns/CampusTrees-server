@@ -109,6 +109,7 @@ else {//Tree selected - Display Form:
     ?>
 
     <h1>Edit Tree</h1>
+    <a href="maintenance.php?t=<?php echo $tree['id'];?>">Maintenance</a><br />
     <form name="edit_tree" action="edit_tree.php?t=<?php echo $tree['id']; ?>" method="POST">
     <h2>Basic Information</h2>
     Tree ID:<?php echo " {$tree['id']}"; ?><br />
