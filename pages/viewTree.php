@@ -33,7 +33,7 @@ $info = $tree->getProperties();
 							<p>Height: <?php echo $info['height']; ?><br />
 							Volume: <?php echo $info['vol']; ?><br />
 							Dry/Green Weight: <?php echo $info['drywt']; ?>/<?php echo $info['greenwt']; ?></p>
-							<h4>Environmental Information</h4>
+							<h3>Environmental Information</h3>
 							<p>Weight of CO<sub>2</sub>/year: <?php echo $info['co2pyear']; ?><br />
 							Weight of CO<sub>2</sub> in life: <?php echo $info['co2seqwt']; ?><br />
 							Weight of Carbon: <?php echo $info['carbonwt']; ?></p>
