@@ -1,7 +1,10 @@
 <?php
 $treeid = $_GET['treeId'];
 
-if (empty($treeid) || !isset($treeid)) {
+require_once("../config.inc.php");
+require_once(ROOT_DIR . 'classes/tree.inc.php');
+
+if (empty($treeid) || !isset($treeid) || $treeid<1) {
 
 ?>
 					<div class="post">
@@ -15,6 +18,8 @@ if (empty($treeid) || !isset($treeid)) {
 }
 
 else {
+$tree = new tree($treeid);
+$info = $tree->getProperties();
 ?>
 					<div class="post">
                                                 <h2 class="title"><a href="#">Tree Information</a></h2>
@@ -22,16 +27,16 @@ else {
 							<?php /*<img src="images/unknowntree.gif" style="float: left;">*/ ?>
 							<h3>Basic Information</h3>
 							<p>Species: &lt;SPECIES&gt;<br />
-							Age: &lt;AGE&gt;<br />
-							Location: &lt;LAT&gt;, &lt;LONG&gt;</p>
+							Age: <?php echo $info['age']; ?><br />
+							Location: <?php echo $info['lat']; ?>, <?php echo $info['long']; ?></p>
 							<h3>Tree Measurements</h3>
-							<p>Height: &lt;HEIGHT&gt;<br />
-							Volume: &lt;VOLUME&gt;<br />
-							Dry/Green Weight: &lt;DRY_WEIGHT&gt;/&lt;GREEN_WEIGHT&gt;</p>
+							<p>Height: <?php echo $info['height']; ?><br />
+							Volume: <?php echo $info['vol']; ?><br />
+							Dry/Green Weight: <?php echo $info['drywt']; ?>/<?php echo $info['greenwt']; ?></p>
 							<h4>Environmental Information</h4>
-							<p>Weight of CO<sub>2</sub>/year: &lt;CO2_YEAR&gt;<br />
-							Weight of CO<sub>2</sub> in life: &lt;CO2_LIFE&gt;<br />
-							Weight of Carbon: &lt;CARBON_WEIGHT&gt;</p>
+							<p>Weight of CO<sub>2</sub>/year: <?php echo $info['co2pyear']; ?><br />
+							Weight of CO<sub>2</sub> in life: <?php echo $info['co2seqwt']; ?><br />
+							Weight of Carbon: <?php echo $info['carbonwt']; ?></p>
                                                 </div>
                                         </div>
                                         <div style="clear: both;">&nbsp;</div>
