@@ -42,7 +42,17 @@ Released   : 20120203
 		<div id="page-bgtop">
 			<div id="page-bgbtm">
 				<div id="content">
-					<?php include("pages/main.php"); ?>
+					<?php 
+					switch ($_GET['p']) {
+						case "viewTree":
+							include("pages/viewTree.php");
+						break;
+						default:
+							include("pages/main.php");
+						break;
+
+					}
+					?>
 				</div>
 				<!-- end #content -->
 				<div id="sidebar">
