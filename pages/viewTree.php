@@ -31,8 +31,8 @@ $species = $sTable->GetSpecies();
 							<h3>Basic Information</h3>
 							<p>Species: <?php
 foreach ($species as $s) {
-	if ($species['sid'] == $info['sid']) {
-		echo $species['commonname'];
+	if ($s['sid'] == $info['sid']) {
+		echo $s['commonname'];
 		break;
 	}
 }
