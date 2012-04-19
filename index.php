@@ -34,6 +34,7 @@ Released   : 20120203
 		<ul>
 			<li<?php if (!isset($_GET['p'])) { echo " class=\"current_page_item\""; } ?>><a href="index.php">Homepage</a></li>
 			<li><a href="mapView.html">Tree Map</a></li>
+			<li><a href="#">Download App</a></li>
 		</ul>
 	</div>
 	<!-- end #menu -->
