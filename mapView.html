@@ -32,6 +32,10 @@
 		marker = new google.maps.Marker({
 			position: treeLocation,
 			map: map
+			url: campusTrees[i][3];
+		});
+		google.maps.event.addListener(marker, 'click', function() {
+			window.location.href= this.url;
 		});
 	}
       }
