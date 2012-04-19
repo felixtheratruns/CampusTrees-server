@@ -1,7 +1,7 @@
 <?php
 $treeid = $_GET['treeId'];
 
-require_once("../config.inc.php");
+require_once("/var/www/config.inc.php");
 require_once(ROOT_DIR . 'classes/tree.inc.php');
 
 if (empty($treeid) || !isset($treeid) || $treeid<1) {
