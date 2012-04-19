@@ -18,7 +18,7 @@ $genus = $gTable->getAll();
 
 ?>
 <h1>Add Species</h1>
-<form name="edit_species" action="post_new_species.php" method="POST">
+<form name="add_species" action="post_new_species.php" method="POST">
 <h2>Basic Information</h2>
 <a href="list_species.php">Species List</a><br><br>
 Common Name: <input type="text" name="commonname" value=""><br />

@@ -39,7 +39,8 @@ foreach ($types as $type) {
     $i = 0;
     while (isset($events[$i]) && $i < 5) {
         $event = $events[$i];
-        echo "{$event['date']} : {$event['comments']} - {$event['user']}<br>";
+        echo "{$event['date']} : {$event['comments']} 
+        - <a href=\"edit_user?uid={$event['uid']}\">{$event['user']}</a><br>";
         $i++;
     }
     echo "<br />";

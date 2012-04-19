@@ -176,7 +176,7 @@ else {//Tree selected - Display Form:
     $hist = $euTable->getEditHistory(1, $tree['recid']);
     foreach ($hist as $row) {
         echo "Edited: {$row['date']} by 
-              <a href=\"view_user.php?uid={$row['uid']}\">{$row['uname']}</a>";
+              <a href=\"edit_user.php?uid={$row['uid']}\">{$row['uname']}</a>";
         if ($row['rem'] == 1) {echo " Tree Removed"; }
         echo "<br>";
     }
