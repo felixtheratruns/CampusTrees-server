@@ -57,15 +57,8 @@ Released   : 20120203
 				<div id="sidebar">
 					<ul>
 						<li>
-							<h2>Tree Species</h2>
-							<ul>
-								<li><a href="#">Aliquam libero</a></li>
-								<li><a href="#">Consectetuer adipiscing elit</a></li>
-								<li><a href="#">Metus aliquam pellentesque</a></li>
-								<li><a href="#">Suspendisse iaculis mauris</a></li>
-								<li><a href="#">Urnanet non molestie semper</a></li>
-								<li><a href="#">Proin gravida orci porttitor</a></li>
-							</ul>
+							<h2>About UWRL</h2>
+							<p>The Urban Wildlife Research Lab is run by Dr. Tommy Parker at the Univserity of Louisville. The lab does lots of research throughout the campus on the wildlife, trees, plants, etc.</p>
 						</li>
 					</ul>
 				</div>
