@@ -1,9 +1,12 @@
 <?php
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/MaintenanceTables.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 
 $mTables = new MaintenanceTables();
 if (!isset($_GET['t'])) {
@@ -23,7 +26,7 @@ foreach ($types as $type) {
     if (isset($_POST[$tyid])) {
 //      echo "Boom<br>";
         $comments = $_POST["comments{$tyid}"];
-        $mTables->logEvent($id, $tyid, $comments, $user);
+        $mTables->logEvent($id, $tyid, $comments, $uid);
     }
     ?>
     <form name="maintenance" action="maintenance.php?t=<?php echo $id; ?>" method="POST">
@@ -36,7 +39,7 @@ foreach ($types as $type) {
     $i = 0;
     while (isset($events[$i]) && $i < 5) {
         $event = $events[$i];
-        echo "{$event['date']} : {$event['comments']}<br>";
+        echo "{$event['date']} : {$event['comments']} - {$event['user']}<br>";
         $i++;
     }
     echo "<br />";
@@ -52,7 +55,7 @@ foreach ($types as $type) {
     if (isset($_POST[$tyid])) {
 //      echo "Boom<br>";
         $comments = $_POST["comments{$tyid}"];
-        $mTables->logEvent($id, $tyid, $comments, $user);
+        $mTables->logEvent($id, $tyid, $comments, $uid);
     }
     ?>
     <form name="maintenance" action="maintenance.php?t=<?php echo $id; ?>" method="POST">

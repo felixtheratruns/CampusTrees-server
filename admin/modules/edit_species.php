@@ -1,15 +1,16 @@
 <?php
-//Require authenticaiton here
-
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/species.inc.php');
 require_once(ROOT_DIR . 'classes/GenusTable.inc.php');
 require_once(ROOT_DIR . 'classes/genus.inc.php');
 require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 ?>
 
 <?php
@@ -37,7 +38,7 @@ if (isset($_POST['sid'])) { //IF Handling an update:
     $edible = 0;
 
     $fields['sid'] = $species['sid'];
-    $fields['uid'] = $user;
+    $fields['uid'] = $uid;
 
     if (isset($_POST['american'])) {
         $american = 1;

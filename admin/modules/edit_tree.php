@@ -1,14 +1,15 @@
 <?php
-//Require authenticaiton here
-//Assuming we will know the user's id and set $uid to this.
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
 require_once(ROOT_DIR . 'classes/tree.inc.php');
 require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
 require_once(ROOT_DIR . 'classes/EntityUpdateTable.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 if (isset($_POST['id'])) { //IF Handling an update:
     $id = $_POST['id'];
     $t = new tree($id);
@@ -34,7 +35,7 @@ if (isset($_POST['id'])) { //IF Handling an update:
     }
     
     $fields['id'] = $tree['id'];
-    $fields['uid'] = $user;
+    $fields['uid'] = $uid;
     
     if ($tree['lat'] != $lat) {
         $fields['lat'] = $lat;
