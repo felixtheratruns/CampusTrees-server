@@ -1,9 +1,12 @@
 <?php
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/genus.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 ?>
 
 <?php
@@ -16,7 +19,7 @@ if (isset($_POST['gid'])) { //IF Handling an update:
     $agf = $_POST['agf'];
 
     $fields['gid'] = $genus['gid'];
-    $fields['uid'] = $user;
+    $fields['uid'] = $uid;
 
     if ($genus['genus'] != $genusn) {
         $fields['genus'] = $genusn;

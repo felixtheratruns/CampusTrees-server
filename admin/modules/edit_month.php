@@ -1,13 +1,14 @@
 <?php
-//Require authenticaiton here
-
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/species.inc.php');
 require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 ?>
 
 <?php

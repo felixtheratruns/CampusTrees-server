@@ -1,12 +1,13 @@
 <?php
-//Require authenticaiton here
-//Assuming we will know the user's id and set $uid to this.
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
 require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 
     $sTable = new SpeciesTable();
     $species = $sTable->GetSpecies();

@@ -30,13 +30,15 @@ class MaintenanceEventRec {
     protected $date;      //MERecCreatedDate
     protected $uid;      //MERecCreatorId
     protected $tid;      //METreeId
+    protected $user;
 
-    public function MaintenanceEventRec($metyid, $mecomments, $medate, $meuid, $metid) {
+    public function MaintenanceEventRec($metyid, $mecomments, $medate, $meuid, $metid, $uuser) {
         $this->tyid = $metyid;
         $this->comments = $mecomments;
         $this->date = $medate;
         $this->uid = $meuid;
         $this->tid = $metid;
+        $this->user = $uuser;
     }
 
     public function getProperties() {
@@ -70,7 +72,7 @@ class MaintenanceTables {
     }
 
     public function getHist($treeid, $tyid) {
-        $query = "SELECT * FROM MaintenanceEvent WHERE
+        $query = "SELECT * FROM MaintenanceEvent inner join User on (MERecCreatorId = UUserId) WHERE
                   MEMaintenanceTypeId = '{$this->dbres->escapeString($tyid)}' AND
                   METreeId = '{$this->dbres->escapeString($treeid)}'
                   ORDER BY MERecCreatedDate DESC";
@@ -81,7 +83,7 @@ class MaintenanceTables {
         while ($row = mysql_fetch_assoc($res)) {
             $meRec = new MaintenanceEventRec($row['MEMaintenanceTypeId'], $row['MEComments'],
                                             $row['MERecCreatedDate'], $row['MERecCreatorId'],
-                                            $row['METreeId']);
+                                            $row['METreeId'], $row['UUsername']);
             $events[$i] = $meRec->getProperties();
             $i++;
         }

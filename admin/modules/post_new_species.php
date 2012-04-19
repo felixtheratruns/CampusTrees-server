@@ -1,11 +1,12 @@
 <?php
-//Require authenticaiton here
-//Assuming we will know the user's id and set $uid to this.
-$user = 1;
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once('../../config.inc.php');
 require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
+require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
+
+if (isset($debug)) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+}
 
 $sTable = new SpeciesTable();
 $sid =  $sTable->getNextId();
@@ -20,7 +21,6 @@ $flowrelleaf = $_POST['flowrelleaf'];
 $american = 0;
 $ky = 0;
 $edible = 0;
-$uid = $user;
 if (isset($_POST['american'])) {
     $american = 1;
 }
