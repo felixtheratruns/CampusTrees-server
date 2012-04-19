@@ -3,6 +3,7 @@ $treeid = $_GET['treeId'];
 
 require_once("/var/www/config.inc.php");
 require_once(ROOT_DIR . 'classes/tree.inc.php');
+require_once(ROOT_DIR . 'classes/SpeciesTable.inc.php');
 
 if (empty($treeid) || !isset($treeid) || $treeid<1) {
 
@@ -20,13 +21,22 @@ if (empty($treeid) || !isset($treeid) || $treeid<1) {
 else {
 $tree = new tree($treeid);
 $info = $tree->getProperties();
+$sTable = new SpeciesTable();
+$species = $sTable->GetSpecies();
 ?>
 					<div class="post">
                                                 <h2 class="title"><a href="#">Tree Information</a></h2>
                                                 <div class="entry">
 							<?php /*<img src="images/unknowntree.gif" style="float: left;">*/ ?>
 							<h3>Basic Information</h3>
-							<p>Species: &lt;SPECIES&gt;<br />
+							<p>Species: <?php
+foreach ($species as $s) {
+	if ($species['sid'] == $info['sid']) {
+		echo $species['commonname'];
+		break;
+	}
+}
+?><br />
 							Age: <?php echo $info['age']; ?><br />
 							Location: <?php echo $info['lat']; ?>, <?php echo $info['long']; ?></p>
 							<h3>Tree Measurements</h3>
