@@ -32,8 +32,7 @@ Released   : 20120203
 	<!-- end #header -->
 	<div id="menu">
 		<ul>
-			<li class="current_page_item"><a href="#">Homepage</a></li>
-			<li><a href="#">About</a></li>
+			<li class="current_page_item"><a href="index.php">Homepage</a></li>
 			<li><a href="mapView.html">Tree Map</a></li>
 		</ul>
 	</div>
