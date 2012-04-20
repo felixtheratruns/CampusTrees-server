@@ -133,16 +133,16 @@ else {//Tree selected - Display Form:
     Age:<?php
         echo " {$tree['age']}";
         if ($tree['avged']) {echo "*";}
-    ?><br />
-    Volume:<?php echo " {$tree['vol']}"; ?><br />
-    Green Weight:<?php echo " {$tree['greenwt']}"; ?><br />
-    Dry Weight:<?php echo " {$tree['drywt']}"; ?><br />
-    Weight of Carbon:<?php echo " {$tree['carbonwt']}"; ?><br />
-    Weight of CO2(Lifetime):<?php echo " {$tree['co2seqwt']}"; ?><br />
+    ?> Years<br />
+    Volume:<?php echo " {$tree['vol']}"; ?> Board Feet<br />
+    Green Weight:<?php echo " {$tree['greenwt']}"; ?> Pounds<br />
+    Dry Weight:<?php echo " {$tree['drywt']}"; ?> Pounds<br />
+    Weight of Carbon:<?php echo " {$tree['carbonwt']}"; ?> Pounds<br />
+    Weight of CO2(Lifetime):<?php echo " {$tree['co2seqwt']}"; ?> Pounds<br />
     Weight of CO2 (per Year):<?php
         echo " {$tree['co2pyear']}";
         if ($tree['avged']) {echo "*";}
-    ?><br />
+    ?> Pounds<br />
     Area of Crown:<?php echo " {$tree['crownarea']}"; ?><br />
     <br>
     
