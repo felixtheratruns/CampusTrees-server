@@ -67,6 +67,7 @@ class Tree {
                 $this->height = func_get_arg(5);
                 $this->cw1 = func_get_arg(6);
                 $this->cw2 = func_get_arg(7);
+                $this->crwnid = func_get_arg(8);
             }    
             $this->genCalFields();
         }
@@ -214,14 +215,14 @@ class Tree {
         }
         private function genCalFields() {
             $this->avged = false;
-            $this->vol = $this->calVolume();
-            $this->greenwt = $this->calGWeight();
-            $this->drywt = $this->calDWeight();
-            $this->carbonwt = $this->calCWeight();
-            $this->co2seqwt = $this->calSWeight();
-            $this->age = $this->calAge();
-            $this->co2pyear = $this->calCO2PerYear();
-            $this->crownarea = $this->calCrownArea();
+            $this->vol = round($this->calVolume(), 3);
+            $this->greenwt = round($this->calGWeight(), 3);
+            $this->drywt = round($this->calDWeight(), 3);
+            $this->carbonwt = round($this->calCWeight(), 3);
+            $this->co2seqwt = round($this->calSWeight(), 3);
+            $this->age = round($this->calAge());
+            $this->co2pyear = round($this->calCO2PerYear(), 3);
+            $this->crownarea = round($this->calCrownArea(), 3);
             return true;
         }
 
@@ -278,8 +279,17 @@ class Tree {
             else {return 0;}
         }
 
+        private function calDiameter() {
+            if ($this->crwnid == 1) {
+                return (($this->cw1 + $this->cw2)/2);
+            }
+            if ($this->crwnid == 2) {
+                return sqrt($this->cw1*$this->cw2);
+            }
+        }
+        
         Private function calCrownArea() {/** @return Area of Crown. *///TODO:cal Area of Crown once get info on Crown Ids
-            return 0;//Something to do the a crown id coeff and the 2 crown widths
+            return ($this->calDiameter()/12)*pi();//Something to do the a crown id coeff and the 2 crown widths
         }
 
 }

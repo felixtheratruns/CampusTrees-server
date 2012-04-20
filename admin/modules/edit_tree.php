@@ -143,7 +143,7 @@ else {//Tree selected - Display Form:
         echo " {$tree['co2pyear']}";
         if ($tree['avged']) {echo "*";}
     ?> Pounds<br />
-    Area of Crown:<?php echo " {$tree['crownarea']}"; ?><br />
+    Area of Crown:<?php echo " {$tree['crownarea']}"; ?> Square Feet<br />
     <br>
     
     <h2>Location</h2>

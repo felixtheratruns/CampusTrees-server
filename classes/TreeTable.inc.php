@@ -52,8 +52,9 @@ class TreeTable {
                         $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
                                       (float)$row['TLat'], (float)$row['TLong'],
                                       (float)$row['TDBH'], (float)$row['THeight'],
-                                      (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);
-                        $selectedTrees[$i] = $t->getProperties();
+                                      (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2'],
+                                      (int)$row['TCrwnId']);
+                        $selectedTrees[$i] = $t->getProperties(true);
                         $i++;
                     }
                 }
@@ -319,7 +320,7 @@ class TreeTable {
         }
         private function QueryAll() {
             return $this->dbres->query("SELECT TTreeId, TLat, TLong, TSpeciesId,
-                          TDBH, THeight, TCrwnWidth1, TCrwnWidth2
+                          TDBH, THeight, TCrwnWidth1, TCrwnWidth2, TCrwnId
                     FROM  Tree
                     WHERE TRemoved = 0");
          
