@@ -16,14 +16,14 @@ class Species {
         protected $fruittype;   //SFruitType
         protected $edible;      //SEdibleFruit
         protected $gf;      //sGrowthFactor
+	protected $gid;		//SGenusId
+	protected $species;     //SSpecies
 
 //Calculated Fields
         protected $count;      //Count of trees of this species
 
 //Admin Properties
 	protected $recid;       //SRecId
-	protected $gid;		//SGenusId
-	protected $species;     //SSpecies
         protected $createdate; //SRecCreatedDate
         protected $creatorid;   //SRecCreatorId
 
@@ -43,6 +43,8 @@ class Species {
                 $this->fruittype = func_get_arg(7);
                 $this->edible = func_get_arg(8);
                 $this->gf = func_get_arg(9);
+                $this->gid = func_get_arg(10);
+                $this->species = func_get_arg(11);
             }    
             $this->genCalFields();
         }
@@ -51,8 +53,6 @@ class Species {
             $properties = get_object_vars($this);
             if (func_num_args() == 0) {//If not passed an arg, don't return admin properties
                 unset($properties['recid']);
-                unset($properties['gid']);
-                unset($properties['species']);
                 unset($properties['createdate']);
                 unset($properties['creatorid']);
             }

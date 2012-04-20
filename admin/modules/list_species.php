@@ -17,11 +17,12 @@ $html = "<html>
     $i = 0;
     $sList = $sTable->GetSpecies();
     $html .= "<table border=\"1\">";
-    $html .= "<tr><th>SpeciesId</th><th>CommonName</th><th>NAmerican</th><th>Ky</th><th>Fruit Type</th><th>Edible</th><th>FlowerRelLeaves</th><th>Count</th><th>Growth Factor</th></tr>";
+    $html .= "<tr><th>SpeciesId</th><th>CommonName</th><th>Species</th><th>NAmerican</th><th>Ky</th><th>Fruit Type</th><th>Edible</th><th>FlowerRelLeaves</th><th>Count</th><th>Growth Factor</th></tr>";
     foreach ($sList as $row) {
         $html .= "<tr><td><a href=\"" . HOME;
         $html .= "admin/modules/edit_species.php?sid={$row['sid']}\">{$row['sid']}</a></td>";
         $html .= "<td>{$row['commonname']}</td>";
+        $html .= "<td>{$row['species']}</td>";
         $html .= "<td>{$row['american']}</td>";
         $html .= "<td>{$row['ky']}</td>";
         $html .= "<td>{$row['fruittype']}</td>";
