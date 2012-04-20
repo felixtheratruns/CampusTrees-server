@@ -30,7 +30,8 @@ class TreeTable {
                     $t = new Tree((int)$row['TTreeId'], (float)$row['TSpeciesId'],
                                   (float)$row['TLat'], (float)$row['TLong'],
                                   (float)$row['TDBH'], (float)$row['THeight'],
-                                  (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2']);
+                                  (int)$row['TCrwnWidth1'], (int)$row['TCrwnWidth2'],
+                                  (int)$row['TCrwnId']);
                     $selectedTrees[$i] = $t->getProperties();
                     $i++;
                 }
@@ -313,7 +314,7 @@ class TreeTable {
             /*Precondition: $zone is a valid zone Id integer, Database connected and populated
              *Postcondition: Returns mysql_dataset of Tree info of trees in the zone specified*/
             return $this->dbres->query("SELECT TTreeId, TLat, TLong, TSpeciesId,
-                          TDBH, THeight, TCrwnWidth1, TCrwnWidth2
+                          TDBH, THeight, TCrwnWidth1, TCrwnWidth2, TCrwnId
                     FROM  Tree INNER JOIN ZoneAreaMapping ON (TAreaId = ZAPAreaId)
                     WHERE ZAPZoneId = " . $this->dbres->escapeString($zone) . " AND TRemoved = 0");
          
