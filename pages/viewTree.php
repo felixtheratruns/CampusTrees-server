@@ -40,14 +40,14 @@ foreach ($species as $s) {
 							Age: <?php echo $info['age']; ?><br />
 							Location: <?php echo $info['lat']; ?>, <?php echo $info['long']; ?></p>
 							<h3>Tree Measurements</h3>
-							<p>Height: <?php echo $info['height']; ?><br />
+							<p>Height: <?php echo $info['height']; ?> ft<br />
 							Volume: <?php echo $info['vol']; ?><br />
-							Dry Weight: <?php echo $info['drywt']; ?><br />
-							Green Weight: <?php echo $info['greenwt']; ?></p>
+							Dry Weight: <?php echo $info['drywt']; ?> lbs<br />
+							Green Weight: <?php echo $info['greenwt']; ?> lbs</p>
 							<h3>Environmental Information</h3>
-							<p>Weight of CO<sub>2</sub>/year: <?php echo $info['co2pyear']; ?><br />
-							Weight of CO<sub>2</sub> in life: <?php echo $info['co2seqwt']; ?><br />
-							Weight of Carbon: <?php echo $info['carbonwt']; ?></p>
+							<p>Weight of CO<sub>2</sub>/year: <?php echo $info['co2pyear']; ?> lbs<br />
+							Weight of CO<sub>2</sub> in life: <?php echo $info['co2seqwt']; ?> lbs<br />
+							Weight of Carbon: <?php echo $info['carbonwt']; ?> lbs</p>
                                                 </div>
                                         </div>
                                         <div style="clear: both;">&nbsp;</div>

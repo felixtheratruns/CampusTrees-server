@@ -34,7 +34,7 @@ $genus = $gTable->GetAll();
 							<h3>Basic Information</h3>
 							<p>Common Name: <?php echo $info['commonname']; ?><br />
 							Growth Factor: <?php echo $info['gf']; ?><br />
-							Number of Trees: <?php echo $info['count']; ?></p>
+							Number of Trees on Campus: <?php echo $info['count']; ?></p>
 							<h3>Regional Information</h3>
 							<p>Native to N. America: <?php echo ($info['american'] ? "Yes" : "No"); ?><br />
 							Native to Kentucky: <?php echo ($info['ky'] ? "Yes" : "No"); ?></p>
