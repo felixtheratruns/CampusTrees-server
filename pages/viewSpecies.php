@@ -32,8 +32,7 @@ $genus = $gTable->GetAll();
                                                 <div class="entry">
 							<?php /*<img src="images/unknowntree.gif" style="float: left;">*/ ?>
 							<h3>Basic Information</h3>
-							<p>Species Name: <?php $info['species']; ?><br />
-							Common Name: <?php echo $info['commonname']; ?><br />
+							<p>Common Name: <?php echo $info['commonname']; ?><br />
 							Growth Factor: <?php echo $info['gf']; ?><br />
 							Number of Trees: <?php echo $info['count']; ?></p>
 							<h3>Regional Information</h3>
