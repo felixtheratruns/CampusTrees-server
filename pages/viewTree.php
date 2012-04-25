@@ -29,14 +29,14 @@ $species = $sTable->GetSpecies();
                                                 <div class="entry">
 							<?php /*<img src="images/unknowntree.gif" style="float: left;">*/ ?>
 							<h3>Basic Information</h3>
-							<p>Species: <?php
+							<p>Species: <a href="index.php?p=viewSpecies&amp;specId=<?php echo $info['sid']; ?>"><?php
 foreach ($species as $s) {
 	if ($s['sid'] == $info['sid']) {
 		echo $s['commonname'];
 		break;
 	}
 }
-?><br />
+?></a><br />
 							Age: <?php echo $info['age']; ?><br />
 							Location: <?php echo $info['lat']; ?>, <?php echo $info['long']; ?></p>
 							<h3>Tree Measurements</h3>

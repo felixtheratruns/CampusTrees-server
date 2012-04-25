@@ -47,6 +47,9 @@ Released   : 20120203
 						case "viewTree":
 							include("pages/viewTree.php");
 						break;
+						case "viewSpecies":
+							include("pages/viewSpecies.php");
+						break;
 						default:
 							include("pages/main.php");
 						break;
