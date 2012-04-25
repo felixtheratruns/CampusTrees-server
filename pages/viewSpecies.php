@@ -1,5 +1,5 @@
 <?php
-$specid = $_GET['spedId'];
+$specid = $_GET['specId'];
 
 require_once("/var/www/config.inc.php");
 require_once(ROOT_DIR . 'classes/species.inc.php');
@@ -41,8 +41,7 @@ $genus = $gTable->GetAll();
 							Native to Kentucky: <?php echo ($info['ky'] ? "Yes" : "No"); ?></p>
 							<h3>Fruit Information</h3>
 							<p>Fruit Type: <?php echo $info['fruittype']; ?><br />
-							Fruit Edible: <?php echo ($info['edible'] ? "Yes*" : "<strong>No</strong>"); ?><br />
-							<strong>*NOTE: Eat at your own risk</strong></p>
+							Fruit Edible: <?php echo ($info['edible'] ? "Yes*<br /><strong>*NOTE: Eat at your own risk</strong>" : "<strong>No</strong>"); ?><br /></p>
                                                 </div>
                                         </div>
                                         <div style="clear: both;">&nbsp;</div>
