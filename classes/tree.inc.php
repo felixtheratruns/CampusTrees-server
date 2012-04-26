@@ -279,17 +279,18 @@ class Tree {
             else {return 0;}
         }
 
-        private function calDiameter() {
+        private function calDiameter() {//Return diameter in feet
             if ($this->crwnid == 1) {
-                return (($this->cw1 + $this->cw2)/2);
+                return (($this->cw1 + $this->cw2)/2)/12;
             }
             if ($this->crwnid == 2) {
-                return sqrt($this->cw1*$this->cw2);
+                return sqrt($this->cw1*$this->cw2)/12;
             }
         }
         
         Private function calCrownArea() {/** @return Area of Crown. *///TODO:cal Area of Crown once get info on Crown Ids
-            return ($this->calDiameter()/12)*pi();//Something to do the a crown id coeff and the 2 crown widths
+//          return ($this->calDiameter()/12)*pi();//Something to do the a crown id coeff and the 2 crown widths
+            return ((pi()/4)*$this->calDiameter()*$this->calDiameter());//Something to do the a crown id coeff and the 2 crown widths
         }
 
 }
