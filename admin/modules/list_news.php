@@ -15,14 +15,16 @@ $html = "<html>
     $i = 0;
     $nList = $nTable->GetNews();
     $html .= "<table border=\"1\">";
-    $html .= "<tr><th>Title</th><th>Body</th><th>Date</th><th>User</th></tr>";
+    $html .= "<tr><th>Title</th><th>Body</th><th>Date</th><th>User</th><th>Remove</th></tr>";
     foreach ($nList as $row) {
-        $html .= "<tr><td><a href=\"" . HOME;
-        $html .= "admin/modules/edit_news.php?nid={$row['nid']}\">{$row['title']}</a></td>";
+        $html .= "<tr>";
+        $html .= "<td>{$row['title']}</td>";
         $html .= "<td>{$row['body']}</td>";
         $html .= "<td>{$row['date']}</td>";
         $html .= "<td><a href=\"" . HOME;
         $html .= "admin/modules/edit_user.php?nid={$row['uid']}\">{$row['uname']}</a></td>";
+        $html .= "<td><a href=\"" . HOME;
+        $html .= "admin/modules/edit_news.php?nid={$row['nid']}\">Delete</a></td>";
         $html .= "</tr>";
     }
     $html .= "</table>";

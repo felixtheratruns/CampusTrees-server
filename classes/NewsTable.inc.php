@@ -67,6 +67,8 @@ class NewsTable {
                           NRecId, NTitle,
                           NBody, NRecCreatedDate, NRecCreatorId, NRemoved
                       FROM News INNER JOIN User ON (NRecCreatorId = UUserId)
+                      WHERE NRemoved = 0
+                      ORDER BY NRecCreatedDate DESC
                     ");
          
         }
