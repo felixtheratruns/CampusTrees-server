@@ -44,12 +44,19 @@ class NewsTable {
             return $this->buildList($admin, $res);
         }
 
+        public function JSON_getNews($admin=false) {
+            /*Precondition: Database connected and populated
+             *Postcondition: Returns JSON optimized array of species info.
+            */
+            return JSON_encode($this->GetNews($admin));
+        }
+
         private function buildList($admin, $sqlres) {
             $i = 0;
             if ($admin) {}//Write meeeee
             else {
                 while ($row = mysql_fetch_assoc($sqlres)) {
-                    $r = new NewsRecord ($row['NRecId'], $row['UUserName'],
+                    $r = new NewsRecord ((int)$row['NRecId'], $row['UUserName'],
                       (int)$row['NRecCreatorId'], (bool)$row['NRemoved'],
                       $row['NRecCreatedDate'], $row['NTitle'],
                       $row['NBody']);
