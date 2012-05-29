@@ -18,4 +18,5 @@ You are currently logged in.
 <a href="modules/list_tree.php">List Trees</a><br>
 <a href="modules/list_species.php">List Species</a><br>
 <a href="modules/list_genus.php">List Genus</a><br>
+<a href="modules/list_news.php">List News</a><br>
 <a href="modules/add_user.php">Add User</a><br>
