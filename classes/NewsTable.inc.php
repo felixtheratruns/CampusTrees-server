@@ -67,6 +67,29 @@ class NewsTable {
             return $selectedNewsRecs;
         }
 
+        public function addNews($uid, $title, $body) {
+            
+            $query = "INSERT INTO News (NRecCreatorId, NTitle,
+                        NBody, NRemoved)
+                      VALUES (
+                '{$this->dbres->escapeString($uid)}',
+                \"{$this->dbres->escapeString($title)}\",
+                \"{$this->dbres->escapeString($body)}\",
+                0,";
+                $query = substr($query, 0, -1);
+                $query .= ")";
+                echo "<br>{$query}<br>";
+                $this->dbres->query($query);
+                echo $this->dbres->getLastError();
+                return true;
+        }
+
+        public function removeNews($nid) {
+            $query = "UPDATE News SET NRemoved = '1' WHERE NRecId = {$this->dbres->escapeString($nid)}";
+//          echo $query;
+            $this->dbres->query($query);
+        }
+
         private function QueryGetNews() {
             /*Precondition: Database connected and populated
              *Postcondition: Returns mysql_dataset of species info*/
