@@ -22,7 +22,7 @@ $html = "<html>
         $html .= "<td>{$row['body']}</td>";
         $html .= "<td>{$row['date']}</td>";
         $html .= "<td><a href=\"" . HOME;
-        $html .= "admin/modules/edit_user.php?nid={$row['uid']}\">{$row['uname']}</a></td>";
+        $html .= "admin/modules/edit_user.php?uid={$row['uid']}\">{$row['uname']}</a></td>";
         $html .= "<td><a href=\"" . HOME;
         $html .= "admin/modules/edit_news.php?nid={$row['nid']}\">Delete</a></td>";
         $html .= "</tr>";
