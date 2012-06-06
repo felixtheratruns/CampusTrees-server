@@ -12,7 +12,7 @@ if (isset($debug)) {
 <form name="add_news" action="post_new_news.php" method="POST">
 <a href="list_news.php">News List</a><br><br>
 Title: <input type="text" name="title" value="Title"><br />
-Species Name: <textarea name="body" rows="8" cols="120">News</textarea>
+Body: <textarea name="body" rows="8" cols="120">News</textarea>
 <br />
 <br />
 
