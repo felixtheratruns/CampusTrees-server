@@ -68,7 +68,7 @@ class WildlifeFactsTable {
         return $selectedWildlifeFact;
     }
 
-    public function addWildlifeFact($uid, $title, $body) {
+    public function addFact($uid, $title, $body) {
          
         $query = "INSERT INTO WildlifeFacts (WFRecCreatorId, WFTitle,
                     WFBody, WFRemoved)
@@ -85,7 +85,7 @@ class WildlifeFactsTable {
             return true;
     }
 
-    public function removeWildlifeFact($wid) {
+    public function removeFact($wid) {
         $query = "UPDATE WildlifeFacts SET WFRemoved = '1' WHERE WFRecId = {$this->dbres->escapeString($wid)}";
         echo $query;
         $this->dbres->query($query);
