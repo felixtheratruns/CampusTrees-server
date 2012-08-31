@@ -40,7 +40,7 @@ class NewsTable {
          *Postcondition: Returns JSON optimized array of species info.
            */
         $res = $this->QueryGetNews();
-        echo $this->dbres->getLastError();
+#       echo $this->dbres->getLastError();
         return $this->buildList($admin, $res);
     }
  
