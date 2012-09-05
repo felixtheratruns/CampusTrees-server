@@ -103,7 +103,11 @@ if (isset($_GET['new']) || $zp = $zpTable->GetZone($zpid) )  {
     
         
     if (!isset($_GET['new']) && !isset($_GET['add'])) $html .= "<a href=\"edit_zone.php?zpid={$zpid}&add=1\">Add a Point</a></br>";
-    $html .= "<input type=\"submit\" value=\"Submit\"><br>
+    $html .= "<h2>Areas</h2>";
+    foreach ($zpTable->GetZoneAreas($zpid) as $row) {
+        $html .= "{$row['aid']} ";
+    }
+    $html .= "<br><br><input type=\"submit\" value=\"Submit\"><br>
                 <a href=\"list_zones.php\">Back to Zone List</a></html>";
     echo $html;
 }

@@ -96,6 +96,21 @@ class ZonePointTable {
             else return false;
         }
 
+        public function GetZoneAreas($zpid) {
+            $res = $this->GetZoneAreasQuery($zpid);
+            $i = 0;
+            $ret = array();
+            while ($row = mysql_fetch_assoc($res)) {
+                $ret[$i] = array('aid' => $row['ZAPAreaId']);
+                $i++;
+            }
+            return $ret;
+        }
+        private function GetZoneAreasQuery($zpid) {
+            return $this->dbres->query("SELECT ZAPAreaId
+                    FROM  ZoneAreaMapping 
+                    WHERE ZAPZoneId = " . $this->dbres->escapeString($zpid) . " ");
+        }
         private function UpdateZonePointQuery($zpid, $pid, $type, $coord) {
             $t = $this->dbres->escapestring($type);
             $c = $this->dbres->escapestring($coord);
