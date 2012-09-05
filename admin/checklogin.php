@@ -13,7 +13,6 @@ $password="";
 $username=$_POST['username']; 
 $password=$_POST['password'];
 
-
 if($id = $uTable->checkLogin($username, $password)){
     session_start();
     $_SESSION['uid'] = $id;
