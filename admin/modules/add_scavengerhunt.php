@@ -12,7 +12,7 @@ if (isset($debug)) {
 <form name="add_scavengerhunt" action="post_new_scavengerhunt.php" method="POST">
 <a href="list_scavengerhunt.php">ScavengerHunt List</a><br><br>
 Title: <input type="text" name="title" value="Title"><br />
-Body: <textarea name="body" rows="8" cols="120">ScavengerHunt</textarea>
+Body: <textarea name="scavid" rows="8" cols="120">ScavengerHunt</textarea>
 <br />
 <br />
 

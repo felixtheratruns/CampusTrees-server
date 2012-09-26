@@ -6,6 +6,8 @@ require_once(ROOT_DIR . 'classes/AppRequestHandler.inc.php');
 require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
+require_once(ROOT_DIR . 'classes/ScavengerHuntTable.inc.php');
+require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTable.inc.php');
 require_once(ROOT_DIR . 'classes/NewsTable.inc.php');
 require_once(ROOT_DIR . 'classes/WildlifeFactsTable.inc.php');
 $handler = new ARHandler();
@@ -14,6 +16,8 @@ $smTable = new SeedingMonthsTable();
 $tTable = new TreeTable();
 $nTable = new NewsTable();
 $wfTable = new WildlifeFactsTable();
+$shTable = new ScavengerHuntTable();
+$shsiTable = new ScavengerHuntSubItemTable(); #scavenger hunt subitem table
 
 if (isset($_GET["zoneRequest"])) {
     echo $handler->JSON_RequestZoneList();
@@ -30,6 +34,14 @@ if (isset($_GET["zone"])) {
 
 if (isset($_GET["pFacts"])) {
     echo $tTable->JSON_getStats();
+}
+
+if (isset($_GET["sHuntMain"])){
+    echo $shTable->JSON_getScavengerHunt();
+}
+
+if (isset($_GET["sHuntSubItems"])){
+    echo $shsiTable->JSON_getScavengerHuntSubItemTable();
 }
 
 if (isset($_GET["wFacts"])) {

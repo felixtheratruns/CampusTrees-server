@@ -3,23 +3,26 @@
 require_once(GCTOOLS_DIR . "database.inc.php");
 
 
-class ScavengerHuntRecord {
-     protected $nid;
+class ScavengerHuntSubItemRecord {
+     protected $sid;
      protected $uname;
      protected $uid;
      protected $rem;
      protected $date;
      protected $title;
-     protected $scavid;
- 
-     public function ScavengerHuntRecord($nnid, $username, $userid, $removed, $updatedate, $ntitle, $nscavid) {
-        $this->nid = $nnid;
+     protected $body;
+     protected $belong_id; 
+
+
+     public function ScavengerHuntSubItemRecord($ssid, $username, $userid, $removed, $updatedate, $stitle, $sbody, $sbelong_id) {
+        $this->sid = $ssid;
         $this->uname = $username;
         $this->uid = $userid;
         $this->rem = $removed;
         $this->date = $updatedate;
-        $this->title = $ntitle;
-        $this->scavid = $nscavid;
+        $this->title = $stitle;
+        $this->body = $sbody;
+        $this->belong_id = $sbelong_id;
      }
  
      public function getProperties() {
@@ -28,28 +31,29 @@ class ScavengerHuntRecord {
     }
 }
 
-class ScavengerHuntTable { 
+class ScavengerHuntSubItemTable { 
     private $dbres;  //Database resource
  
     //Contructor
-    public function ScavengerHuntTable() {
+    public function ScavengerHuntSubItemTable() {
         $this->dbres = new MySQL(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB);
     }
  
-    public function GetScavengerHunt($admin=false) {
+    public function GetScavengerHuntSubItem($admin=false) {
         /*Precondition: Database connected and populated
          *Postcondition: Returns JSON optimized array of species info.
            */
-        $res = $this->QueryGetScavengerHunt();
-#       echo $this->dbres->getLastError();
+        $res = $this->QueryGetScavengerHuntSubItem();
         return $this->buildList($admin, $res);
     }
  
-    public function JSON_getScavengerHunt($admin=false) {
+    public function JSON_getScavengerHuntSubItem($admin=false) {
         /*Precondition: Database connected and populated
          *Postcondition: Returns JSON optimized array of species info.
         */
-        return JSON_encode($this->GetScavengerHunt($admin));
+        
+        echo $this->dbres->getLastError();
+        return JSON_encode($this->GetScavengerHuntSubItem($admin));
     }
  
     private function buildList($admin, $sqlres) {
@@ -57,47 +61,50 @@ class ScavengerHuntTable {
         if ($admin) {}//Write meeeee
         else {
             while ($row = mysql_fetch_assoc($sqlres)) {
-                $r = new ScavengerHuntRecord ((int)$row['SRecId'], $row['UUserName'],
+                $r = new ScavengerHuntSubItemRecord ((int)$row['SRecId'], $row['UUserName'],
                   (int)$row['SRecCreatorId'], (bool)$row['SRemoved'],
                   $row['SRecCreatedDate'], $row['STitle'],
-                  $row['SScavId']);
-                $selectedScavengerHuntRecs[$i] = $r->getProperties();
+                  $row['SBody'],(int)$row['SScavId']);
+                $selectedScavengerHuntSubItemRecs[$i] = $r->getProperties();
                 $i++;
             }
         }
-        return $selectedScavengerHuntRecs;
+
+        echo $this->dbres->getLastError();
+        return $selectedScavengerHuntSubItemRecs;
     }
  
-    public function addScavengerHunt($uid, $title, $scavid) {
+    public function addScavengerHuntSubItem($uid, $title, $body, $belong_id) {
          
-        $query = "INSERT INTO ScavengerHunt (SRecCreatorId, STitle,
-                    SScavId, SRemoved)
+        $query = "INSERT INTO ScavengerHuntSubItem (SRecCreatorId, STitle,
+                    SBody, SScavId, SRemoved)
                   VALUES (
             '{$this->dbres->escapeString($uid)}',
             \"{$this->dbres->escapeString($title)}\",
-            \"{$this->dbres->escapeString($scavid)}\",
+            \"{$this->dbres->escapeString($body)}\",
+            \"{$this->dbres->escapeString($belong_id)}\", 
             0,";
             $query = substr($query, 0, -1);
             $query .= ")";
-            echo "<br>{$query}<br>";
+            //echo "<br>{$query}<br>";
             $this->dbres->query($query);
-            echo $this->dbres->getLastError();
+            //echo $this->dbres->getLastError();
             return true;
     }
  
-    public function removeScavengerHunt($nid) {
-        $query = "UPDATE ScavengerHunt SET SRemoved = '1' WHERE SRecId = {$this->dbres->escapeString($nid)}";
+    public function removeScavengerHuntSubItem($sid) {
+        $query = "UPDATE ScavengerHuntSubItem SET SRemoved = '1' WHERE SRecId = {$this->dbres->escapeString($sid)}";
         echo $query;
         $this->dbres->query($query);
     }
  
-    private function QueryGetScavengerHunt() {
+    private function QueryGetScavengerHuntSubItem() {
         /*Precondition: Database connected and populated
          *Postcondition: Returns mysql_dataset of species info*/
         return $this->dbres->query("SELECT UUserName, UUserId,
                       SRecId, STitle,
-                      SScavId, SRecCreatedDate, SRecCreatorId, SRemoved
-                  FROM ScavengerHunt INNER JOIN User ON (SRecCreatorId = UUserId)
+                      SBody, SScavId, SRecCreatedDate, SRecCreatorId, SRemoved
+                  FROM ScavengerHuntSubItem INNER JOIN User ON (SRecCreatorId = UUserId)
                   WHERE SRemoved = 0
                   ORDER BY SRecCreatedDate DESC
                 ");

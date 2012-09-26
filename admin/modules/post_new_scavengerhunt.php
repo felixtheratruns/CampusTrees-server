@@ -11,9 +11,9 @@ if (isset($debug)) {
 $nTable = new ScavengerHuntTable();
 
 $title = $_POST['title'];
-$body = $_POST['body'];
+$scavid = $_POST['scavid'];
 
-if ($nTable->addScavengerHunt($uid, $title, $body)) {
+if ($nTable->addScavengerHunt($uid, $title, $scavid)) {
     echo "<HEAD><meta http-equiv=\"REFRESH\" content=\"0;url=" . HOME ."admin/modules/list_scavengerhunt.php\"></HEAD>";
 }
 else {echo "Error adding scavengerhunt!";}

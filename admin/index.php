@@ -19,6 +19,8 @@ You are currently logged in.
 <a href="modules/list_species.php">List Species</a><br>
 <a href="modules/list_genus.php">List Genus</a><br>
 <a href="modules/list_news.php">List News</a><br>
+<a href="modules/list_scavengerhunt.php">List Scavenger Hunt</a><br>
+<a href="modules/list_scavengerhuntsubitem.php">List Scavenger Hunt Sub-Items</a><br>
 <a href="modules/list_wfact.php">List Wildlife Facts</a><br>
 <a href="modules/list_zones.php">List Zones</a><br>
 <a href="modules/add_user.php">Add User</a><br>
