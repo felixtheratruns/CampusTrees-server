@@ -13,10 +13,10 @@ $html = "<html>
 <a href=\"add_scavengerhuntsubitem.php\">Add a ScavengerHuntSubItem Item</a></br>";
 
     $i = 0;
-    $nList = $nTable->GetScavengerHuntSubItem();
+    $sList = $nTable->GetScavengerHuntSubItem();
     $html .= "<table border=\"1\">";
     $html .= "<tr><th>The SScavId of the ScavengerHunt this item belongs to</th><th>Title</th><th>Body</th><th>User</th><th>Remove</th></tr>";
-    foreach ($nList as $row) {
+    foreach ($sList as $row) {
         
         $html .= "<tr>";
         $html .= "<td>{$row['belong_id']}</td>";

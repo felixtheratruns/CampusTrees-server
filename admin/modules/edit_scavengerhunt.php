@@ -8,9 +8,9 @@ if (isset($debug)) {
     ini_set('display_errors', '1');
 }
 
-$nTable = new ScavengerHuntTable();
-$nid = $_GET['nid'];
+$sTable = new ScavengerHuntTable();
+$sid = $_GET['sid'];
 
-$nTable->removeScavengerHunt($nid);
+$sTable->removeScavengerHunt($sid);
 echo "<HEAD><meta http-equiv=\"REFRESH\" content=\"0;url=" . HOME ."admin/modules/list_scavengerhunt.php\"></HEAD>";
 ?>

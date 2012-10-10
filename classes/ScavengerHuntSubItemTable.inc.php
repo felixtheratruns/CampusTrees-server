@@ -13,7 +13,6 @@ class ScavengerHuntSubItemRecord {
      protected $body;
      protected $belong_id; 
 
-
      public function ScavengerHuntSubItemRecord($ssid, $username, $userid, $removed, $updatedate, $stitle, $sbody, $sbelong_id) {
         $this->sid = $ssid;
         $this->uname = $username;
@@ -43,16 +42,45 @@ class ScavengerHuntSubItemTable {
         /*Precondition: Database connected and populated
          *Postcondition: Returns JSON optimized array of species info.
            */
+
+/*
+        echo "test admin: $admin";
+        if($admin){
+            $res = $this->QueryGetScavengerHuntSubItem();
+        } else {
+            
+            $res = $this->QueryGetScavengerHuntSubItemSpec($scavId);
+            echo "\n second if";
+        } 
+*/        
         $res = $this->QueryGetScavengerHuntSubItem();
         return $this->buildList($admin, $res);
+    }
+
+ 
+    public function GetScavengerHuntSubItemSpec($scavId) {
+        /*Precondition: Database connected and populated
+         *Postcondition: Returns JSON optimized array of species info.
+           */
+
+        $res = $this->QueryGetScavengerHuntSubItemSpec($scavId);
+        $admin = false; //watch out!! hard coded value
+        return $this->buildList($admin, $res);
+    }
+
+
+    public function JSON_getSubItemsByScavengerHunt($scavId){
+//        echo $this->dbres->getLastError();
+        return JSON_encode($this->GetScavengerHuntSubItemSpec($scavId));
+
     }
  
     public function JSON_getScavengerHuntSubItem($admin=false) {
         /*Precondition: Database connected and populated
          *Postcondition: Returns JSON optimized array of species info.
-        */
-        
-        echo $this->dbres->getLastError();
+     //   */
+//        echo "JSON_getScavengerHuntSubItem:" . $scavId;
+//        echo $this->dbres->getLastError();
         return JSON_encode($this->GetScavengerHuntSubItem($admin));
     }
  
@@ -69,9 +97,13 @@ class ScavengerHuntSubItemTable {
                 $i++;
             }
         }
+       if($selectedScavengerHuntSubItemRecs){
+        
+       }else {
+        return NULL;
+        }
 
-        echo $this->dbres->getLastError();
-        return $selectedScavengerHuntSubItemRecs;
+       return $selectedScavengerHuntSubItemRecs;
     }
  
     public function addScavengerHuntSubItem($uid, $title, $body, $belong_id) {
@@ -98,18 +130,42 @@ class ScavengerHuntSubItemTable {
         $this->dbres->query($query);
     }
  
+    private function QueryGetScavengerHuntSubItemSpec($scavId) {
+        /*Precondition: Database connected and populated
+         *Postcondition: Returns mysql_dataset of species info*/
+        $query = $this->dbres->query("SELECT UUserName, UUserId,
+                      SRecId, STitle,
+                      SBody, SScavId, SRecCreatedDate, SRecCreatorId, SRemoved
+                  FROM ScavengerHuntSubItem INNER JOIN User ON (SRecCreatorId = UUserId)
+                  WHERE SRemoved = 0
+                  AND SScavId = " . $scavId . " 
+                  ORDER BY SRecCreatedDate DESC
+                ");
+        if($query == NULL){
+            echo "query returned NULL";
+        }
+        return $query;
+          
+    }
+ 
     private function QueryGetScavengerHuntSubItem() {
         /*Precondition: Database connected and populated
          *Postcondition: Returns mysql_dataset of species info*/
-        return $this->dbres->query("SELECT UUserName, UUserId,
+        $query = $this->dbres->query("SELECT UUserName, UUserId,
                       SRecId, STitle,
                       SBody, SScavId, SRecCreatedDate, SRecCreatorId, SRemoved
                   FROM ScavengerHuntSubItem INNER JOIN User ON (SRecCreatorId = UUserId)
                   WHERE SRemoved = 0
                   ORDER BY SRecCreatedDate DESC
                 ");
-          
+        if($query == NULL){
+            echo "query returned NULL";
+        }
+        return $query;
     }
+ 
+
+
  
  /*
      public function getNextId() {

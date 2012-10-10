@@ -36,12 +36,15 @@ if (isset($_GET["pFacts"])) {
     echo $tTable->JSON_getStats();
 }
 
-if (isset($_GET["sHuntMain"])){
+if (isset($_GET["sHunt"])){
     echo $shTable->JSON_getScavengerHunt();
 }
 
 if (isset($_GET["sHuntSubItems"])){
-    echo $shsiTable->JSON_getScavengerHuntSubItemTable();
+    $sHuntSubItems = $_GET["sHuntSubItems"]; 
+//    echo "moo: " . $sHuntSubItems;
+//    echo $shsiTable->JSON_getScavengerHuntSubItem();
+    echo $shsiTable->JSON_getSubItemsByScavengerHunt($sHuntSubItems);
 }
 
 if (isset($_GET["wFacts"])) {

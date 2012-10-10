@@ -4,7 +4,7 @@ require_once(GCTOOLS_DIR . "database.inc.php");
 
 
 class ScavengerHuntRecord {
-     protected $nid;
+     protected $sid;
      protected $uname;
      protected $uid;
      protected $rem;
@@ -12,14 +12,14 @@ class ScavengerHuntRecord {
      protected $title;
      protected $scavid;
  
-     public function ScavengerHuntRecord($nnid, $username, $userid, $removed, $updatedate, $ntitle, $nscavid) {
-        $this->nid = $nnid;
+     public function ScavengerHuntRecord($ssid, $username, $userid, $removed, $updatedate, $stitle, $sscavid) {
+        $this->sid = $ssid;
         $this->uname = $username;
         $this->uid = $userid;
         $this->rem = $removed;
         $this->date = $updatedate;
-        $this->title = $ntitle;
-        $this->scavid = $nscavid;
+        $this->title = $stitle;
+        $this->scavid = $sscavid;
      }
  
      public function getProperties() {
@@ -85,8 +85,8 @@ class ScavengerHuntTable {
             return true;
     }
  
-    public function removeScavengerHunt($nid) {
-        $query = "UPDATE ScavengerHunt SET SRemoved = '1' WHERE SRecId = {$this->dbres->escapeString($nid)}";
+    public function removeScavengerHunt($sid) {
+        $query = "UPDATE ScavengerHunt SET SRemoved = '1' WHERE SRecId = {$this->dbres->escapeString($sid)}";
         echo $query;
         $this->dbres->query($query);
     }
