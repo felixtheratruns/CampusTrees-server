@@ -12,8 +12,9 @@ class ScavengerHuntSubItemRecord {
      protected $title;
      protected $body;
      protected $belong_id; 
+     protected $png_name;
 
-     public function ScavengerHuntSubItemRecord($ssid, $username, $userid, $removed, $updatedate, $stitle, $sbody, $sbelong_id) {
+     public function ScavengerHuntSubItemRecord($ssid, $username, $userid, $removed, $updatedate, $stitle, $sbody, $sbelong_id, $spng_name) {
         $this->sid = $ssid;
         $this->uname = $username;
         $this->uid = $userid;
@@ -22,6 +23,7 @@ class ScavengerHuntSubItemRecord {
         $this->title = $stitle;
         $this->body = $sbody;
         $this->belong_id = $sbelong_id;
+        $this->png_name = $spng_name;
      }
  
      public function getProperties() {
@@ -92,7 +94,7 @@ class ScavengerHuntSubItemTable {
                 $r = new ScavengerHuntSubItemRecord ((int)$row['SRecId'], $row['UUserName'],
                   (int)$row['SRecCreatorId'], (bool)$row['SRemoved'],
                   $row['SRecCreatedDate'], $row['STitle'],
-                  $row['SBody'],(int)$row['SScavId']);
+                  $row['SBody'],(int)$row['SScavId'],$row['SPngPath']);
                 $selectedScavengerHuntSubItemRecs[$i] = $r->getProperties();
                 $i++;
             }
@@ -106,15 +108,16 @@ class ScavengerHuntSubItemTable {
        return $selectedScavengerHuntSubItemRecs;
     }
  
-    public function addScavengerHuntSubItem($uid, $title, $body, $belong_id) {
+    public function addScavengerHuntSubItem($uid, $title, $body, $belong_id, $png_name) {
          
         $query = "INSERT INTO ScavengerHuntSubItem (SRecCreatorId, STitle,
-                    SBody, SScavId, SRemoved)
+                    SBody, SScavId, SPngPath, SRemoved)
                   VALUES (
             '{$this->dbres->escapeString($uid)}',
             \"{$this->dbres->escapeString($title)}\",
             \"{$this->dbres->escapeString($body)}\",
             \"{$this->dbres->escapeString($belong_id)}\", 
+            \"{$this->dbres->escapeString($png_name)}\",
             0,";
             $query = substr($query, 0, -1);
             $query .= ")";
@@ -135,7 +138,7 @@ class ScavengerHuntSubItemTable {
          *Postcondition: Returns mysql_dataset of species info*/
         $query = $this->dbres->query("SELECT UUserName, UUserId,
                       SRecId, STitle,
-                      SBody, SScavId, SRecCreatedDate, SRecCreatorId, SRemoved
+                      SBody, SScavId, SPngPath, SRecCreatedDate, SRecCreatorId, SRemoved
                   FROM ScavengerHuntSubItem INNER JOIN User ON (SRecCreatorId = UUserId)
                   WHERE SRemoved = 0
                   AND SScavId = " . $scavId . " 
@@ -153,7 +156,7 @@ class ScavengerHuntSubItemTable {
          *Postcondition: Returns mysql_dataset of species info*/
         $query = $this->dbres->query("SELECT UUserName, UUserId,
                       SRecId, STitle,
-                      SBody, SScavId, SRecCreatedDate, SRecCreatorId, SRemoved
+                      SBody, SScavId, SPngPath, SRecCreatedDate, SRecCreatorId, SRemoved
                   FROM ScavengerHuntSubItem INNER JOIN User ON (SRecCreatorId = UUserId)
                   WHERE SRemoved = 0
                   ORDER BY SRecCreatedDate DESC

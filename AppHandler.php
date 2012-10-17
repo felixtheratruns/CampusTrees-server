@@ -7,7 +7,7 @@ require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
 require_once(ROOT_DIR . 'classes/ScavengerHuntTable.inc.php');
-require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTableBu.inc.php');
+require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTable.inc.php');
 require_once(ROOT_DIR . 'classes/NewsTable.inc.php');
 require_once(ROOT_DIR . 'classes/WildlifeFactsTable.inc.php');
 $handler = new ARHandler();
