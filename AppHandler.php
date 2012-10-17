@@ -7,7 +7,7 @@ require_once(ROOT_DIR . 'classes/FlowerMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/SeedingMonthsTable.inc.php');
 require_once(ROOT_DIR . 'classes/TreeTable.inc.php');
 require_once(ROOT_DIR . 'classes/ScavengerHuntTable.inc.php');
-require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTable.inc.php');
+require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTableBu.inc.php');
 require_once(ROOT_DIR . 'classes/NewsTable.inc.php');
 require_once(ROOT_DIR . 'classes/WildlifeFactsTable.inc.php');
 $handler = new ARHandler();
@@ -18,6 +18,15 @@ $nTable = new NewsTable();
 $wfTable = new WildlifeFactsTable();
 $shTable = new ScavengerHuntTable();
 $shsiTable = new ScavengerHuntSubItemTable(); #scavenger hunt subitem table
+
+
+if (isset($_GET["image"])){
+    $image = $_GET["image"];
+    $im = imagecreatefrompng("images/" . $image);
+    header('Content-Type: image/png');
+    imagepng($im);
+    imagedestroy($im);
+}
 
 if (isset($_GET["zoneRequest"])) {
     echo $handler->JSON_RequestZoneList();

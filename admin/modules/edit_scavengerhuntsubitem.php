@@ -1,6 +1,6 @@
 <?php
 require_once('../../config.inc.php');
-require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTable.inc.php');
+require_once(ROOT_DIR . 'classes/ScavengerHuntSubItemTableBu.inc.php');
 require_once(ROOT_DIR . 'admin/modules/auth.inc.php');
 $debug = 1;
 if (isset($debug)) {

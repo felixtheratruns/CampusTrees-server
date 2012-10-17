@@ -14,6 +14,7 @@ if (isset($debug)) {
 SScavId of the ScavengerHunt it belongs to: <input type="text" name="belong_id" value="0"><br />
 Title: <input type="text" name="title" value="Title"><br />
 Body: <textarea name="body" rows="8" cols="120">ScavengerHuntSubItem</textarea>
+Png Path: <input type="text" name="png_name" value="Png name">
 <br />
 <br />
 
