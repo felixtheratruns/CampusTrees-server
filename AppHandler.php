@@ -22,10 +22,35 @@ $shsiTable = new ScavengerHuntSubItemTable(); #scavenger hunt subitem table
 
 if (isset($_GET["image"])){
     $image = $_GET["image"];
-    $im = imagecreatefrompng("images/" . $image);
-    header('Content-Type: image/png');
-    imagepng($im);
-    imagedestroy($im);
+    $file = "images/" . $image;
+
+    if (file_exists($file)) {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename='.basename($file));
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file));
+        ob_clean();
+        flush();
+        readfile($file);
+
+/*
+        #Use this instead of the previous for png's only
+        #I guess this would be usefull if there is a 
+        #problem with other types of images besides.
+        $im = imagecreatefrompng("images/" . $image);
+        header('Content-Type: image/png');
+        imagepng($im);
+        imagedestroy($im);
+*/
+
+
+    }
+
+
 }
 
 if (isset($_GET["zoneRequest"])) {
