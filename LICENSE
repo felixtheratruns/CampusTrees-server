@@ -1,0 +1,11 @@
+This file is part of the server-side of CampusTrees and contains the CampusTrees license.
+
+CampusTrees is a tree archiving program that stores and displays data on trees. It includes both a server-side and a client-side. At the time of this writing on the 6th of April 2014 it is a php server-side and an android app client-side. 
+Copyright © 2012-2014  Michael Brown, Joel Cambon, Rachel Determann, Jimmy Murphy
+
+CampusTrees is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+CampusTrees is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with CampusTrees. If not, see <http://www.gnu.org/licenses/>.
